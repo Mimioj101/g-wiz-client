@@ -41,3 +41,21 @@
         grid-row: 1 / span 3;
         height: 820px;
       }
+
+      h6 {
+        position: relative;
+        margin: auto;
+        margin-top: -200px;
+        text-align: center;
+      }
+
+      .card {
+        min-width: 75%;
+        min-height: 75%;
+      }
+
+      .card_text {
+        min-width: 100%;
+        min-height: 100%;
+      }
+    
