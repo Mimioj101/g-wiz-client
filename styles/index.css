@@ -2,7 +2,9 @@
     grid-area: toolbar;
     background-color: #457b9d;
     height: 50px;
-    color: white;}
+    color: white;
+    border-radius: 15px;
+  }
 
     .grid-container {
         display: grid;
@@ -12,17 +14,16 @@
         padding: 10px;
         width: auto;
         height: auto;
+        
       }
 
-    .no-js {
-        background-color: #a8dadc; 
-    }
       
       .grid-container > div {
         background-color: rgba(255, 255, 255, 0.8);
         text-align: center;
         padding: 20px 0;
         font-size: 30px;
+        border-radius: 15px;
       }
       
       .item1 {
@@ -63,4 +64,13 @@
       }
     h6 ul li{
       text-align: left;
+    }
+
+    .logged-in {
+      background-color: #a8dadc;
+      border-radius: 15px;
+    }
+
+    .login {
+      background-color: black;
     }

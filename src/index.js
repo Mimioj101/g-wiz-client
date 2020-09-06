@@ -6,7 +6,10 @@ card_text.style.setProperty('animation-fill-mode',  'none')
 const item2 = document.querySelector('.item2')
 const card = document.querySelector('.card')
 const text = document.querySelector('h6')
+const loggedIn = document.querySelector('.logged-in')
+const login = document.querySelector('.login')
 let filteredQ = []
+
 
 
 card.addEventListener('click', function(e){
@@ -42,6 +45,25 @@ card_text.addEventListener('animationend', function(e) {
     <li>${question.related_words[2]}</li>
     </ul>`
   }
+
+loggedIn.hidden = true;
+card_text.hidden = true;
+
+document.addEventListener('click', function(e){
+    loggedIn.hidden = false;
+    login.style.backgroundColor = '#a8dadc'
+
+})
+
+item2.addEventListener('click', function(e){
+    start();
+})
+
+function start(){
+    card_text.classList.add('animate__animated', 'animate__bounceInLeft');
+        pickAQuestion(filteredQ)
+        card_text.hidden = false;
+}
 
 
 
