@@ -1,4 +1,3 @@
-console.log("Hello World")
 
 let array = ['This is a random questions', 'How many licks in a lollipop?', 'What color is the sky', 'How old is the oldest person?', 'What year was I born?', 'What year are we in?']
 const card_text = document.querySelector('.card_text');
@@ -6,14 +5,14 @@ card_text.style.setProperty('--animate-duration', '.5s');
 card_text.style.setProperty('animation-fill-mode',  'none')
 const item2 = document.querySelector('.item2')
 const card = document.querySelector('.card')
+const text = document.querySelector('h6')
+let filteredQ = []
 
 
-card_text.addEventListener('click', function(e){
-    if(e.target.matches('img')){
-        e.target.nextElementSibling.innerText = array[Math.floor(Math.random() * 8)]
+card.addEventListener('click', function(e){
+
         card_text.classList.add('animate__animated', 'animate__flip');
-       
-    }    
+        pickAQuestion(filteredQ)
 });
 
 card_text.addEventListener('animationend', function(e) {
@@ -27,10 +26,21 @@ card_text.addEventListener('animationend', function(e) {
   .then(filterQuestions)
 
   function filterQuestions(questionsArray){
-
-    let filteredQ = questionsArray.filter(question => question.level === 'ES' && question.difficulty === 1)
+    filteredQ = []
+    filteredQ = questionsArray.filter(question => question.level === 'ES' && question.difficulty === 1)
     pickAQuestion(filteredQ)
 
+  }
+
+  function pickAQuestion(questions){
+      displayQuestion(questions[Math.floor(Math.random() * questions.length)])
+  }
+
+  function displayQuestion(question){
+    text.innerHTML = `<ul><li>${question.related_words[0]}</li>
+    <li>${question.related_words[1]}</li>
+    <li>${question.related_words[2]}</li>
+    </ul>`
   }
 
 

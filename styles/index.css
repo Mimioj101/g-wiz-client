@@ -45,8 +45,11 @@
       h6 {
         position: relative;
         margin: auto;
-        margin-top: -200px;
-        text-align: center;
+        margin-top: -343px;
+        /* text-align: center; */
+        width: 200px;
+        height: 100px;
+        font-size: 50px;
       }
 
       .card {
@@ -58,4 +61,6 @@
         min-width: 100%;
         min-height: 100%;
       }
-    
+    h6 ul li{
+      text-align: left;
+    }
