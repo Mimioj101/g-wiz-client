@@ -10,11 +10,16 @@ const loggedIn = document.querySelector('.logged-in')
 const login = document.querySelector('.login')
 const levelBar = document.querySelector('#level')
 const difficultyBar = document.querySelector('#difficulty')
+const logo = document.querySelector('.logo')
+const item3 = document.querySelector('.item3')
+const option1 = document.querySelector('#option_1')
+const option2 = document.querySelector('#option_2')
+const nextBtn = document.querySelector('#next_question')
 let filteredQ = []
 
 
 //when card is clicked, a new question is pulled
-card.addEventListener('click', function(e){
+nextBtn.addEventListener('click', function(e){
         card_text.classList.add('animate__animated', 'animate__flip');
         pickAQuestion(filteredQ)
 });
@@ -37,7 +42,6 @@ function getAllQuestions(level, diff){
     filteredQ = []
     filteredQ = questionsArray.filter(question => question.level === level && question.difficulty === parseInt(diff))
     pickAQuestion(filteredQ)
-
   }
 
   //pull a random question from filtered array
@@ -47,21 +51,30 @@ function getAllQuestions(level, diff){
 
   //display question on flashcard
   function displayQuestion(question){
-      console.log(question)
+     console.log(question)
     text.innerHTML = `<ul><li>${question.related_words[0]}</li>
     <li>${question.related_words[1]}</li>
     <li>${question.related_words[2]}</li>
     </ul>`
+    option1.innerText = question.option_1
+    option2.innerText = question.option_2
   }
 
 loggedIn.hidden = true;
-card_text.hidden = true;
+//card_text.hidden = true;
+
 
 
 //login verified 
 document.addEventListener('click', function(e){
     loggedIn.hidden = false;
-    login.style.backgroundColor = '#a8dadc'
+    login.style.backgroundColor = '#a8dadc';
+    //login.children[0].remove();
+    logo.hidden = true
+    //console.dir(login)
+    if(e.target.match('')){
+
+    }
 
 })
 
@@ -78,9 +91,10 @@ startbtn.addEventListener('click', function(e){
 function start(){
     getAllQuestions('ES', 1);
     card_text.classList.add('animate__animated', 'animate__bounceInLeft');
-    card_text.hidden = false;
+    //card_text.hidden = false;
     getDifficulty('ES');
     getLevels();
+
     
 }
 

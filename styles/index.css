@@ -34,6 +34,9 @@
     }
     .item3 {
       grid-row: 2 / span 1;
+      margin-top: -190px;
+      padding-top: 0px;
+      padding-bottom: 0px;
 
     }
     .item4 {
@@ -62,6 +65,7 @@
     .card_text {
         min-width: 100%;
         min-height: 100%;
+        margin-bottom: -145px;
       }
 
     h6 ul li{
@@ -77,6 +81,11 @@
       background-color: black;
     }
 
+    .logo {
+      margin-left: 300px;
+      margin-top: -50px;
+    }
+
     #level, #difficulty {
       font-size: 20px;
       border-radius: 15px;
@@ -90,4 +99,15 @@
       width: 50px;
       height: 50px;
       border-radius: 30px;
+    }
+
+    .item2 {
+      height: 50px;
+    }
+
+    .item3 button {
+      width: 100px;
+      height: 75px;
+      border-radius: 15px;
+      /* margin-top: -150px; */
     }
