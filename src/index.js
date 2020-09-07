@@ -3,7 +3,7 @@ let array = ['This is a random questions', 'How many licks in a lollipop?', 'Wha
 const card_text = document.querySelector('.card_text');
 card_text.style.setProperty('--animate-duration', '.5s');
 card_text.style.setProperty('animation-fill-mode',  'none')
-const item5 = document.querySelector('.item5')
+const startbtn = document.querySelector('.start')
 const card = document.querySelector('.card')
 const text = document.querySelector('h6')
 const loggedIn = document.querySelector('.logged-in')
@@ -36,7 +36,6 @@ function getAllQuestions(level, diff){
   function filterQuestions(questionsArray, level, diff){
     filteredQ = []
     filteredQ = questionsArray.filter(question => question.level === level && question.difficulty === parseInt(diff))
-    console.log(filteredQ)
     pickAQuestion(filteredQ)
 
   }
@@ -66,10 +65,16 @@ document.addEventListener('click', function(e){
 
 })
 
-item5.addEventListener('click', function(e){
+//start button for now
+startbtn.addEventListener('click', function(e){
+    if(e.target.className === "item5 start"){
     start();
+    e.target.className = "item5"
+    console.log(e.target)
+    }
 })
 
+//load game 
 function start(){
     getAllQuestions('ES', 1);
     card_text.classList.add('animate__animated', 'animate__bounceInLeft');
@@ -79,6 +84,7 @@ function start(){
     
 }
 
+//calls API to get a list of all questions then sorts through array to get uniqe level values
 function getLevels(){
   fetch('http://localhost:3000/questions/')
   .then(resp => resp.json())
@@ -94,23 +100,27 @@ function getLevels(){
           }
       })
       populateLevelBar(uniqValue)
-      //getDifficulty(level)
   })
 }
 
+// when user selects an option from level, sends option value and 1 (for difficulty) to getAllQuestions()
+//also sends the option value to getDifficulty() to grab a list of all the difficulty numbers
 levelBar.addEventListener('change', function(e){
+    card.click();
     getAllQuestions(e.target.value, 1)
     getDifficulty(e.target.value)
 })
 
+//when user clicks on difficulty bar the value from both dropsdowns are sent to getAllQuestions()
 difficultyBar.addEventListener('change', function(e){
     console.dir(e.target)
-    getAllQuestions(e.target.previousElementSibling.value,e.target.value)
+    card.click();
+    getAllQuestions(e.target.previousElementSibling.value, e.target.value)
 })
 
+//calls API to get a list of all questions then sorts through array to get uniqe difficulty values
 function getDifficulty(level){
-    console.log(level.value)
-    fetch('http://localhost:3000/questions/')
+  fetch('http://localhost:3000/questions/')
   .then(resp => resp.json())
   .then(questions => {
         let difficulty = []
@@ -125,13 +135,12 @@ function getDifficulty(level){
               uniqValue.push(d)
           }
       })
-      console.log(uniqValue + " values")
       populateDifficultyBar(uniqValue)
   })
   }
 
+  //create options in select element for difficulties
   function populateDifficultyBar(difficulty){
-      console.log(difficulty)
       difficultyBar.innerHTML = ""
       for(let num of difficulty){
           let option = document.createElement('option')
@@ -141,7 +150,7 @@ function getDifficulty(level){
       }
   }
 
-
+//create options in select element for levels
 function populateLevelBar(levels){
     levelBar.innerHTML = ""
     

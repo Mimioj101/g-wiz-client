@@ -15,56 +15,55 @@
         width: auto;
         height: auto;
         
-      }
+    }
 
       
-      .grid-container > div {
-        background-color: rgba(255, 255, 255, 0.8);
-        text-align: center;
-        padding: 20px 0;
-        font-size: 30px;
-        border-radius: 15px;
-      }
+    .grid-container > div {
+      background-color: rgba(255, 255, 255, 0.8);
+      text-align: center;
+      padding: 20px 0;
+      font-size: 30px;
+      border-radius: 15px;
+    }
       
-      .item1 {
-        grid-row: 1 / span 3;
-      }
-      .item2 {
-        grid-row: 1 / span 1;
-      }
-      .item3 {
-        grid-row: 2 / span 1;
-  
-      }
-      .item4 {
-        grid-row: 3 / span 1;
-      }
-      .item5 {
-        grid-row: 1 / span 3;
-        height: 820px;
-      }
+    .item1 {
+      grid-row: 1 / span 3;
+    }
+    .item2 {
+      grid-row: 1 / span 1;
+    }
+    .item3 {
+      grid-row: 2 / span 1;
 
-      h6 {
-        position: relative;
-        margin: auto;
-        margin-top: -343px;
+    }
+    .item4 {
+      grid-row: 3 / span 1;
+    }
+    .item5 {
+      grid-row: 1 / span 3;
+      height: 820px;
+    }
 
-        width: 200px;
-        height: 100px;
-        font-size: 50px;
-      }
+    h6 {
+      position: relative;
+      margin: auto;
+      margin-top: -343px;
 
-      .card {
-        min-width: 75%;
-        min-height: 75%;
-      }
+      width: 200px;
+      height: 100px;
+      font-size: 50px;
+    }
 
-      .card_text {
+    .card {
+      min-width: 75%;
+      min-height: 75%;
+    }
+
+    .card_text {
         min-width: 100%;
         min-height: 100%;
-        /* width: 790px;
-        height: 338px; */
       }
+
     h6 ul li{
       text-align: left;
     }
