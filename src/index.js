@@ -15,40 +15,44 @@ const item3 = document.querySelector('.item3')
 const option1 = document.querySelector('#option_1')
 const option2 = document.querySelector('#option_2')
 const nextBtn = document.querySelector('#next_question')
+const loginForm = document.querySelector('.name-form')
 let filteredQ = []
+let rightAns = []
+let wrongAns = []
 
 
 //when card is clicked, a new question is pulled
 nextBtn.addEventListener('click', function(e){
         card_text.classList.add('animate__animated', 'animate__flip');
         pickAQuestion(filteredQ)
+        option1.style.background = 'white'
+        option2.style.background = 'white'
 });
 
-//new
-//when card is clicked, a new question is pulled
-// nextBtn.addEventListener('click', function(e){
-//     card_text.classList.add('animate_animated', 'animate_flip');
-//     pickAQuestion(filteredQ)
-// })
-// event listener for option buttons
-// const optionListener = (question) => {
+
+//right & wrong option buttons
     card_text.addEventListener('click', function(e){
       if (e.target.matches("#option_1")){
             if(e.target.dataset.btn === e.target.dataset.correct){
-                console.log("Correct")
+                rightAns.push(option1.dataset.q_id)
+                option1.style.background = 'green'
             } else {
-                console.log("Wrong")
+                wrongAns.push(option1.dataset.q_id)
+                option1.style.background = 'red'
             }
     } else if (e.target.matches("#option_2") ){
             if(e.target.dataset.btn === e.target.dataset.correct){
-                console.log("Correct")
+                rightAns.push(option2.dataset.q_id)
+                option2.style.background = 'green'
             } else {
-                console.log("Wrong")
+                wrongAns.push(option2.dataset.q_id)
+                option2.style.background = 'red'
             }
             
         } 
+        console.log(rightAns)
+        console.log(wrongAns)
     })
-// }
 
 
 // sets class back to plain classname after animation flip
@@ -85,8 +89,10 @@ function getAllQuestions(level, diff){
     </ul>`
     option1.innerText = question.option_1
     option1.dataset.correct = question.correct_answer
+    option1.dataset.q_id = question.id
     option2.innerText = question.option_2
     option2.dataset.correct = question.correct_answer
+    option2.dataset.q_id = question.id
   }
 
 loggedIn.hidden = true;
@@ -95,12 +101,22 @@ loggedIn.hidden = true;
 
 
 //login verified 
-document.addEventListener('click', function(e){
+loginForm.addEventListener('submit', function(e){
+    e.preventDefault();
     loggedIn.hidden = false;
     login.style.backgroundColor = '#a8dadc';
     //login.children[0].remove();
     logo.hidden = true
-
+    loginForm.hidden = true
+    const currentUser = e.target.firstElementChild.value
+    const options = {
+        method: 'POST',
+        headers: {'content-type': 'application/json', 'accept': 'application/json'},
+        body: JSON.stringify({name: currentUser})
+    }
+    fetch("http://localhost:3000/users/", options)
+    .then(resp => resp.json())
+    .then(users => console.log(users))
 })
 
 //start button for now
