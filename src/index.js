@@ -13,9 +13,10 @@ const logo = document.querySelector('.logo')
 const item3 = document.querySelector('.item3')
 const option1 = document.querySelector('#option_1')
 const option2 = document.querySelector('#option_2')
-// const startBtn = document.querySelector('#start')
 const nextBtn = document.querySelector('#next_question')
 const loginForm = document.querySelector('.name-form')
+const numRight = document.querySelector('#num-right')
+const numWrong = document.querySelector('#num-wrong')
 let filteredQ = []
 let rightAns = []
 let wrongAns = []
@@ -36,17 +37,21 @@ nextBtn.addEventListener('click', function(e){
             if(e.target.dataset.btn === e.target.dataset.correct){
                 rightAns.push(option1.dataset.q_id)
                 option1.style.background = 'green'
+                numRight.innerText = rightAns.length
             } else {
                 wrongAns.push(option1.dataset.q_id)
                 option1.style.background = 'red'
+                numWrong.innerText = wrongAns.length
             }
     } else if (e.target.matches("#option_2") ){
             if(e.target.dataset.btn === e.target.dataset.correct){
                 rightAns.push(option2.dataset.q_id)
                 option2.style.background = 'green'
+                numRight.innerText = rightAns.length
             } else {
                 wrongAns.push(option2.dataset.q_id)
                 option2.style.background = 'red'
+                numWrong.innerText = wrongAns.length
             }   
         } 
     })
@@ -79,7 +84,6 @@ function getAllQuestions(level, diff){
 
   //display question on flashcard
   function displayQuestion(question){
-     console.log(question)
     text.innerHTML = `<ul><li>${question.related_words[0]}</li>
     <li>${question.related_words[1]}</li>
     <li>${question.related_words[2]}</li>
@@ -223,8 +227,5 @@ function populateLevelBar(levels){
         levelBar.append(option)
     }
 }
-
-
-
 
 
