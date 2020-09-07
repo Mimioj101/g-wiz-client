@@ -3,7 +3,6 @@ let array = ['This is a random questions', 'How many licks in a lollipop?', 'Wha
 const card_text = document.querySelector('.card_text');
 card_text.style.setProperty('--animate-duration', '.5s');
 card_text.style.setProperty('animation-fill-mode',  'none')
-const startbtn = document.querySelector('.start')
 const card = document.querySelector('.card')
 const text = document.querySelector('h6')
 const loggedIn = document.querySelector('.logged-in')
@@ -14,6 +13,7 @@ const logo = document.querySelector('.logo')
 const item3 = document.querySelector('.item3')
 const option1 = document.querySelector('#option_1')
 const option2 = document.querySelector('#option_2')
+// const startBtn = document.querySelector('#start')
 const nextBtn = document.querySelector('#next_question')
 const loginForm = document.querySelector('.name-form')
 let filteredQ = []
@@ -47,11 +47,8 @@ nextBtn.addEventListener('click', function(e){
             } else {
                 wrongAns.push(option2.dataset.q_id)
                 option2.style.background = 'red'
-            }
-            
+            }   
         } 
-        console.log(rightAns)
-        console.log(wrongAns)
     })
 
 
@@ -117,26 +114,26 @@ loginForm.addEventListener('submit', function(e){
     fetch("http://localhost:3000/users/", options)
     .then(resp => resp.json())
     .then(users => console.log(users))
+    start();
 })
 
 //start button for now
-startbtn.addEventListener('click', function(e){
-    if(e.target.className === "item5 start"){
-    start();
-    e.target.className = "item5"
-    console.log(e.target)
-    }
-})
+// startBtn.addEventListener('click', function(e){
+//     if(e.target.id === "start"){
+//         option1.hidden = false
+//         nextBtn.hidden = false
+//         e.target.id = "option_2"
+//         start();
+//     }
+// })
 
 //load game 
 function start(){
     getAllQuestions('ES', 1);
     card_text.classList.add('animate__animated', 'animate__bounceInLeft');
-    //card_text.hidden = false;
-    getDifficulty('ES');
-    getLevels();
 
-    
+    getDifficulty('ES');
+    getLevels();   
 }
 
 //calls API to get a list of all questions then sorts through array to get uniqe level values
