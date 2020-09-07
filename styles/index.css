@@ -76,3 +76,18 @@
     .login {
       background-color: black;
     }
+
+    #level, #difficulty {
+      font-size: 20px;
+      border-radius: 15px;
+      background: hsla(184, 96%, 20%, 0.548);
+      width: 200px;
+      height: 50px;
+      text-align-last: center;
+    }
+
+    #difficulty{
+      width: 50px;
+      height: 50px;
+      border-radius: 30px;
+    }
