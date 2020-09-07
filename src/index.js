@@ -19,30 +19,37 @@ let filteredQ = []
 
 
 //when card is clicked, a new question is pulled
+nextBtn.addEventListener('click', function(e){
+        card_text.classList.add('animate__animated', 'animate__flip');
+        pickAQuestion(filteredQ)
+});
+
+//new
+//when card is clicked, a new question is pulled
 // nextBtn.addEventListener('click', function(e){
-//     card_text.classList.add('animate__animated', 'animate__flip');
+//     card_text.classList.add('animate_animated', 'animate_flip');
 //     pickAQuestion(filteredQ)
 // })
-
 // event listener for option buttons
 // const optionListener = (question) => {
     card_text.addEventListener('click', function(e){
-        console.dir(e.target)
-        if (e.target.matches('#next_question')){
-            card_text.classList.add('animate__animated', 'animate__flip');
-            pickAQuestion(filteredQ)
-        } else if (e.target.matches("#option_1") && question.correct_answer === 1){
-            console.log("you're right")
+      if (e.target.matches("#option_1")){
+            if(e.target.dataset.btn === e.target.dataset.correct){
+                console.log("Correct")
+            } else {
+                console.log("Wrong")
+            }
+    } else if (e.target.matches("#option_2") ){
+            if(e.target.dataset.btn === e.target.dataset.correct){
+                console.log("Correct")
+            } else {
+                console.log("Wrong")
+            }
             
-        } else if (e.target.matches("#option_2") && question.correct_answer === 2){
-            console.log("you're right")
-        } else if (e.target.matches("#option_2") && question.correct_answer === 1){
-            console.log("youre wrong")
-        } else if (e.target.matches("#option_1") && question.correct_answer === 2){
-            console.log("youre wrong")
-        }
+        } 
     })
 // }
+
 
 // sets class back to plain classname after animation flip
 card_text.addEventListener('animationend', function(e) {
@@ -77,8 +84,9 @@ function getAllQuestions(level, diff){
     <li>${question.related_words[2]}</li>
     </ul>`
     option1.innerText = question.option_1
+    option1.dataset.correct = question.correct_answer
     option2.innerText = question.option_2
-    // optionListener(question)
+    option2.dataset.correct = question.correct_answer
   }
 
 loggedIn.hidden = true;
@@ -92,10 +100,6 @@ document.addEventListener('click', function(e){
     login.style.backgroundColor = '#a8dadc';
     //login.children[0].remove();
     logo.hidden = true
-    //console.dir(login)
-    // if(e.target.match('')){
-
-    // }
 
 })
 
