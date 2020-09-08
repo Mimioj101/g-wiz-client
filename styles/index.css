@@ -127,3 +127,9 @@
     .item1 h6{
       margin-top: -100px;
     }
+
+    .name-form {
+      position: relative;
+      text-align: center;
+      margin-top: -100px;
+    }

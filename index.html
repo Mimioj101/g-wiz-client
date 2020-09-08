@@ -16,13 +16,19 @@
         <img class="logo animate__animated animate__tada animate__slower animate__repeat-3" src="./styles/G-Wiz.png" width="800px" height="800px"/>
         <form class="name-form">
             <input type="text" id="username" name="username" placeholder="Your Name">
-            <input type="submit" value="Submit">
+            <input type="submit" value="Let Me In!">
           </form>
         <div class = 'logged-in'>
             <header class="toolbar"> Badges </header>
             <div class="grid-container">
                 <div class="item1">
-                    <div><span>Created Questions</span></div>
+                    <div>
+                        <span>Created Questions</span>
+                        <ul id="created_questions">
+                            
+                        </ul>
+                    </div>
+                    
                 </div>
                 <div class="item2 dropdown">
                     <select id = 'level'></select>
@@ -82,6 +88,9 @@
                         </p>
                         <p>Answered Incorrectly:
                             <span id="num-wrong">0</span>
+                        </p>
+                        <p>Questions Created:
+                            <span id="num-questions">0</span>
                         </p>
                     </ul>
                 </div>

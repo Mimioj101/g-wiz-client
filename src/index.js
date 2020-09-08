@@ -23,9 +23,13 @@ const rightAnsLabel1 = document.querySelector('#ans-opt-1')
 const rightAnsLabel2 = document.querySelector('#ans-opt-2')
 const questionForm = document.querySelector('#question-form')
 const body = document.querySelector('.login')
+const createdQuestions = document.querySelector('#created_questions')
+const numQuestions = document.querySelector('#num-questions')
 let filteredQ = []
 let rightAns = []
 let wrongAns = []
+let createdQuestionsArray = []
+// let thisUser = 0
 
 
 //when card is clicked, a new question is pulled
@@ -36,8 +40,6 @@ nextBtn.addEventListener('click', function(e){
         option2.style.background = 'white'
         option1.disabled = false;
         option2.disabled = false;
-        // const bod = document.querySelector(body)
-        // bod.dataset.userId
 });
 
 
@@ -131,12 +133,12 @@ loginForm.addEventListener('submit', function(e){
     }
     fetch("http://localhost:3000/users/", options)
     .then(resp => resp.json())
-    .then(user => storeUser(user))
+    .then(myUser => storeUser(myUser))
     start();
 })
 
-const storeUser = (user) => {
- body.dataset.userId = user.id
+const storeUser = (myUser) => {
+ thisUser = body.dataset.user = myUser.id
 }
 
 
@@ -286,20 +288,39 @@ questionForm.addEventListener('submit', function(e){
 
     fetch("http://localhost:3000/questions", options)
     .then(resp => resp.json())
-    .then(console.log)
-
-    // const config = {
-    //     method: "POST",
-    //     headers: {
-    //         "content-type": "application/json",
-    //         "accept": "application/json"},
-    //     body: JSON.stringify({
-    //         user_id: XX,
-    //         question_id: XX})
-    // }
-
-    // fetch("http://localhost:3000/user_questions", config)
-    // .then(resp => resp.json())
-    // .then(console.log)
-
+    //.then(question => updateUserQuestions(question.id))
+    .then(function(question){
+        updateUserQuestions(question.id)
+        displayUserQuestion(question)
+        createdQuestionsArray.push(question)
+        updateNumQuestions()
+    })
+    questionForm.reset();
 })
+
+function updateUserQuestions(questionId){
+    const config = {
+        method: "POST",
+        headers: {
+            "content-type": "application/json",
+            "accept": "application/json"},
+        body: JSON.stringify({
+            user_id: thisUser,
+            question_id: questionId})
+    }
+
+    fetch("http://localhost:3000/user_questions", config)
+    .then(resp => resp.json())
+    .then()
+}
+
+function displayUserQuestion(question){
+    const li = document.createElement('li')
+    const stringWord = question.related_words.join(", ")
+    li.innerText = stringWord
+    createdQuestions.append(li)
+}
+
+function updateNumQuestions(){
+    numQuestions.innerText = createdQuestionsArray.length
+}  
