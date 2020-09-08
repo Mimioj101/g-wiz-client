@@ -60,6 +60,7 @@
     .card {
       min-width: 75%;
       min-height: 75%;
+      padding-right: 50px
     }
 
     .card_text {
@@ -103,11 +104,26 @@
 
     .item2 {
       height: 50px;
+      margin-bottom: 20px
     }
 
     .item3 button {
       width: 100px;
       height: 75px;
       border-radius: 15px;
+      margin-top: 50px;
       /* margin-top: -150px; */
+    }
+
+    /* #next_question {
+      margin-top: -73px;
+      font-size: 20px;
+    } */
+
+    .item5 h6 {
+      margin-top: 0px;
+    }
+
+    .item1 h6{
+      margin-top: -100px;
     }

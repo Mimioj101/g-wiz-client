@@ -28,29 +28,35 @@ nextBtn.addEventListener('click', function(e){
         pickAQuestion(filteredQ)
         option1.style.background = 'white'
         option2.style.background = 'white'
+        option1.disabled = false;
+        option2.disabled = false;
 });
 
 
 //right & wrong option buttons
     card_text.addEventListener('click', function(e){
       if (e.target.matches("#option_1")){
+        option1.disabled = true;
+        option2.disabled = true;
             if(e.target.dataset.btn === e.target.dataset.correct){
                 rightAns.push(option1.dataset.q_id)
-                option1.style.background = 'green'
+                option1.style.background = '#57886C'
                 numRight.innerText = rightAns.length
             } else {
                 wrongAns.push(option1.dataset.q_id)
-                option1.style.background = 'red'
+                option1.style.background = '#E63946'
                 numWrong.innerText = wrongAns.length
             }
     } else if (e.target.matches("#option_2") ){
+        option1.disabled = true;
+        option2.disabled = true;
             if(e.target.dataset.btn === e.target.dataset.correct){
                 rightAns.push(option2.dataset.q_id)
-                option2.style.background = 'green'
+                option2.style.background = '#57886C'
                 numRight.innerText = rightAns.length
             } else {
                 wrongAns.push(option2.dataset.q_id)
-                option2.style.background = 'red'
+                option2.style.background = '#E63946'
                 numWrong.innerText = wrongAns.length
             }   
         } 
@@ -197,8 +203,11 @@ function getDifficulty(level){
 
   //create options in select element for difficulties
   function populateDifficultyBar(difficulty){
+      let sorted = difficulty.sort(function(a, b){
+        return a - b
+      })
       difficultyBar.innerHTML = ""
-      for(let num of difficulty){
+      for(let num of sorted){
           let option = document.createElement('option')
           option.value = num
           option.innerText = num
@@ -215,7 +224,7 @@ function populateLevelBar(levels){
         let option = document.createElement('option')
         option.value = level
         if(level == 'ES'){
-            name = 'Elementry School'
+            name = 'Elementary School'
         } else if(level == 'MS'){
             name = 'Middle School'
         } else if (level == 'HS'){
