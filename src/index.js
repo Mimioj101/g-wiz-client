@@ -17,6 +17,10 @@ const nextBtn = document.querySelector('#next_question')
 const loginForm = document.querySelector('.name-form')
 const numRight = document.querySelector('#num-right')
 const numWrong = document.querySelector('#num-wrong')
+const opField1 = document.querySelector('#op1')
+const opField2 = document.querySelector('#op2')
+const rightAnsLabel1 = document.querySelector('#ans-opt-1')
+const rightAnsLabel2 = document.querySelector('#ans-opt-2')
 let filteredQ = []
 let rightAns = []
 let wrongAns = []
@@ -237,4 +241,13 @@ function populateLevelBar(levels){
     }
 }
 
+
+
+opField1.addEventListener('input', function(e){
+    rightAnsLabel1.textContent = e.target.value
+})
+
+opField2.addEventListener('input', function(e){
+    rightAnsLabel2.textContent = e.target.value
+})
 
