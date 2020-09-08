@@ -1,5 +1,5 @@
 
-let array = ['This is a random questions', 'How many licks in a lollipop?', 'What color is the sky', 'How old is the oldest person?', 'What year was I born?', 'What year are we in?']
+// let array = ['This is a random questions', 'How many licks in a lollipop?', 'What color is the sky', 'How old is the oldest person?', 'What year was I born?', 'What year are we in?']
 const card_text = document.querySelector('.card_text');
 card_text.style.setProperty('--animate-duration', '.5s');
 card_text.style.setProperty('animation-fill-mode',  'none')
@@ -21,6 +21,8 @@ const opField1 = document.querySelector('#op1')
 const opField2 = document.querySelector('#op2')
 const rightAnsLabel1 = document.querySelector('#ans-opt-1')
 const rightAnsLabel2 = document.querySelector('#ans-opt-2')
+const questionForm = document.querySelector('#question-form')
+const body = document.querySelector('.login')
 let filteredQ = []
 let rightAns = []
 let wrongAns = []
@@ -34,6 +36,8 @@ nextBtn.addEventListener('click', function(e){
         option2.style.background = 'white'
         option1.disabled = false;
         option2.disabled = false;
+        // const bod = document.querySelector(body)
+        // bod.dataset.userId
 });
 
 
@@ -127,19 +131,16 @@ loginForm.addEventListener('submit', function(e){
     }
     fetch("http://localhost:3000/users/", options)
     .then(resp => resp.json())
-    .then(users => console.log(users))
+    .then(user => storeUser(user))
     start();
 })
 
-//start button for now
-// startBtn.addEventListener('click', function(e){
-//     if(e.target.id === "start"){
-//         option1.hidden = false
-//         nextBtn.hidden = false
-//         e.target.id = "option_2"
-//         start();
-//     }
-// })
+const storeUser = (user) => {
+ body.dataset.userId = user.id
+}
+
+
+
 
 //load game 
 function start(){
@@ -251,3 +252,54 @@ opField2.addEventListener('input', function(e){
     rightAnsLabel2.textContent = e.target.value
 })
 
+questionForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    const button = e.target
+    const rw1 = document.querySelector("#rw1")
+    const rw2 = document.querySelector("#rw2")
+    const rw3 = document.querySelector("#rw3")
+    const levelDrop = document.querySelector("#level-drpdwn")
+    const diffDrop = document.querySelector("#difficulty-drpdwn")
+    const op1Btn = document.querySelector("#op1Btn")
+    let relatedWordsArr = []
+    let corr_answer = 2
+
+    if (op1Btn.checked) {
+        corr_answer = 1
+    }
+
+    relatedWordsArr.push(rw1.value, rw2.value, rw3.value)
+
+    const options = {
+        method: "POST",
+        headers: {
+            "content-type": "application/json",
+            "accept": "application/json"},
+        body: JSON.stringify({
+            related_words: relatedWordsArr,
+            option_1: opField1.value,
+            option_2: opField2.value,
+            correct_answer: corr_answer,
+            level: levelDrop.value,
+            difficulty: diffDrop.value})
+    }
+
+    fetch("http://localhost:3000/questions", options)
+    .then(resp => resp.json())
+    .then(console.log)
+
+    // const config = {
+    //     method: "POST",
+    //     headers: {
+    //         "content-type": "application/json",
+    //         "accept": "application/json"},
+    //     body: JSON.stringify({
+    //         user_id: XX,
+    //         question_id: XX})
+    // }
+
+    // fetch("http://localhost:3000/user_questions", config)
+    // .then(resp => resp.json())
+    // .then(console.log)
+
+})
