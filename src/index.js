@@ -335,7 +335,8 @@ createdQuestions.addEventListener('click', function(e){
     if (button.matches('#edit-btn')) {
         editQuestion(button.dataset.qId)
     } else if (button.matches('#del-btn')){
-        deleteQuestion(button.dataset.qId)
+        deleteQuestion(button.dataset.qId, button.dataset.uqId)
+        button.parentElement.remove();
     }
 })
 
@@ -343,16 +344,22 @@ const editQuestion = (qId) => {
     console.log("fetch")
 }
 
-const deleteQuestion = (qId) => {
-    console.log("Betch")
+const deleteQuestion = (qId, uqId) => {
     const options = {
         method: "DELETE",
         headers: {
             "content-type": "application/json",
             "accept": "application/json"},
     }
-    
-    fetch("http://localhost:3000/user_questions/", options)
-    fetch request + options to /user_questions
-    fetch request + options to /questions
+    // let uqId = button.dataset.uqId
+
+    fetch("http://localhost:3000/user_questions/" + uqId, options)
+    .then(console.log)
+
+    fetch("http://localhost:3000/questions/" + qId, options)
+    .then(console.log)
+
+
+    // fetch request + options to /user_questions
+    // fetch request + options to /questions
 }
