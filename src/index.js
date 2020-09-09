@@ -245,21 +245,20 @@ function populateLevelBar(levels){
         levelBar.append(option)
     }
 }
-
-
-
+//auto populate radio field
 opField1.addEventListener('input', function(e){
     rightAnsLabel1.textContent = e.target.value
 })
 
+//auto populate radio field
 opField2.addEventListener('input', function(e){
     rightAnsLabel2.textContent = e.target.value
 })
 
 questionForm.addEventListener('submit', function(e){
     e.preventDefault();
-    const button = e.target
-    if (button.matches('#submit-create')){
+    let button = e.target
+        console.log("created")
         const rw1 = document.querySelector("#rw1")
         const rw2 = document.querySelector("#rw2")
         const rw3 = document.querySelector("#rw3")
@@ -293,15 +292,16 @@ questionForm.addEventListener('submit', function(e){
         .then(resp => resp.json())
         .then(function(question){
             updateUserQuestions(question)
-            //displayUserQuestion(question)
             createdQuestionsArray.push(question)
             updateNumQuestions()
         })
         questionForm.reset();
-    } else if (button.matches('#submit-edit')){
-
-    }
+        rightAnsLabel1.textContent = "Option 1"
+        rightAnsLabel2.textContent = "Option 2"
+    
 })
+
+
 
 function updateUserQuestions(question){
     const config = {
@@ -333,17 +333,55 @@ function updateNumQuestions(){
     numQuestions.innerText = createdQuestionsArray.length
 }  
 
-createdQuestions.addEventListener('click', function(e){
+document.addEventListener('click', function(e){
     const button = e.target
     if (button.matches('#edit-btn')) {
         editQuestion(button.dataset.qId)
     } else if (button.matches('#del-btn')){
         deleteQuestion(button.dataset.qId, button.dataset.uqId)
         button.parentElement.remove();
+        questionForm.reset();
+        rightAnsLabel1.textContent = "Option 1"
+        rightAnsLabel1.textContent = "Option 2"
+    } else if (button.matches('#btn-edit')){
+        let updateId = button.dataset.update
+        const rw1 = document.querySelector("#rw1")
+        const rw2 = document.querySelector("#rw2")
+        const rw3 = document.querySelector("#rw3")
+        const levelDrop = document.querySelector("#level-drpdwn")
+        const diffDrop = document.querySelector("#difficulty-drpdwn")
+        const op1Btn = document.querySelector("#op1Btn")
+        let relatedWordsArr = []
+        let corr_answer = 2
+    
+        if (op1Btn.checked) {
+            corr_answer = 1
+        }
+    
+        relatedWordsArr.push(rw1.value, rw2.value, rw3.value)
+    
+        const options = {
+            method: "PATCH",
+            headers: {
+                "content-type": "application/json",
+                "accept": "application/json"},
+            body: JSON.stringify({
+                related_words: relatedWordsArr,
+                option_1: opField1.value,
+                option_2: opField2.value,
+                correct_answer: corr_answer,
+                level: levelDrop.value,
+                difficulty: diffDrop.value})
+        } 
+        fetch("http://localhost:3000/questions/" + updateId, options)
+        .then(resp => resp.json())
+
     }
 })
 
 const editQuestion = (qId) => {
+    document.querySelector('#btn-edit').hidden = false
+    document.querySelector('#btn-edit').dataset.update = qId
     
     fetch("http://localhost:3000/questions/" + qId)
     .then(resp => resp.json())
@@ -368,34 +406,7 @@ const editQuestion = (qId) => {
         } else {
             op2Btn.checked = true
         }
-
-        let relatedWordsArray = []
-        let corr_ans = 2
-    
-        if (op1Btn.checked) {
-            corr_ans = 1
-        }
-    
-        relatedWordsArray.push(rwOne.value, rwTwo.value, rwThree.value)
-    
-        const updateOptions = {
-            method: "PATCH",
-            headers: {
-                "content-type": "application/json",
-                "accept": "application/json"},
-            body: JSON.stringify({
-                related_words: relatedWordsArray,
-                option_1: opField1.value,
-                option_2: opField2.value,
-                correct_answer: corr_ans,
-                level: levelDropdown.value,
-                difficulty: diffDropdown.value})
-        }
-    
-       fetch("http://localhost:3000/questions/" + qId, updateOptions)
-       .then(resp => resp.json())
-       .then(console.log)
-    })
+     })
 }
 
 const deleteQuestion = (qId, uqId) => {
@@ -405,10 +416,11 @@ const deleteQuestion = (qId, uqId) => {
             "content-type": "application/json",
             "accept": "application/json"},
     }
-
     fetch("http://localhost:3000/user_questions/" + uqId, options)
     .then(console.log)
 
     fetch("http://localhost:3000/questions/" + qId, options)
     .then(console.log)
+    createdQuestionsArray.pop();
+    updateNumQuestions();
 }
