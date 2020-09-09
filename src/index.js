@@ -2,31 +2,36 @@
 // let array = ['This is a random questions', 'How many licks in a lollipop?', 'What color is the sky', 'How old is the oldest person?', 'What year was I born?', 'What year are we in?']
 const card_text = document.querySelector('.card_text');
 card_text.style.setProperty('--animate-duration', '.5s');
-card_text.style.setProperty('animation-fill-mode',  'none')
-const card = document.querySelector('.card')
-const text = document.querySelector('h6')
-const loggedIn = document.querySelector('.logged-in')
-const login = document.querySelector('.login')
-const levelBar = document.querySelector('#level')
-const difficultyBar = document.querySelector('#difficulty')
-const logo = document.querySelector('.logo')
-const item3 = document.querySelector('.item3')
-const option1 = document.querySelector('#option_1')
-const option2 = document.querySelector('#option_2')
-const nextBtn = document.querySelector('#next_question')
-const loginForm = document.querySelector('.name-form')
-const numRight = document.querySelector('#num-right')
-const numWrong = document.querySelector('#num-wrong')
-const opField1 = document.querySelector('#op1')
-const opField2 = document.querySelector('#op2')
-const rightAnsLabel1 = document.querySelector('#ans-opt-1')
-const rightAnsLabel2 = document.querySelector('#ans-opt-2')
-const questionForm = document.querySelector('#question-form')
-const body = document.querySelector('.login')
-const createdQuestions = document.querySelector('#created_questions')
-const numQuestions = document.querySelector('#num-questions')
-const editBtn = document.querySelector('#edit-btn')
-const delBtn = document.querySelector('#del-btn')
+card_text.style.setProperty('animation-fill-mode',  'none');
+const card = document.querySelector('.card');
+const text = document.querySelector('h6');
+const loggedIn = document.querySelector('.logged-in');
+const login = document.querySelector('.login');
+const levelBar = document.querySelector('#level');
+const difficultyBar = document.querySelector('#difficulty');
+const logo = document.querySelector('.logo');
+const item3 = document.querySelector('.item3');
+const option1 = document.querySelector('#option_1');
+const option2 = document.querySelector('#option_2');
+const nextBtn = document.querySelector('#next_question');
+const loginForm = document.querySelector('.name-form');
+const numRight = document.querySelector('#num-right');
+const numWrong = document.querySelector('#num-wrong');
+const opField1 = document.querySelector('#op1');
+const opField2 = document.querySelector('#op2');
+const rightAnsLabel1 = document.querySelector('#ans-opt-1');
+const rightAnsLabel2 = document.querySelector('#ans-opt-2');
+const questionForm = document.querySelector('#question-form');
+const body = document.querySelector('.login');
+const createdQuestions = document.querySelector('#created_questions');
+const numQuestions = document.querySelector('#num-questions');
+const editBtn = document.querySelector('#edit-btn');
+const delBtn = document.querySelector('#del-btn');
+// MODAL SHIT //
+const modal = document.getElementById("myModal");
+const btn = document.getElementById("myBtn");
+const span = document.getElementsByClassName("close")[0];
+// MODAL SHIT //
 let consecutiveRight = 0
 let filteredQ = []
 let rightAns = []
@@ -513,7 +518,34 @@ const countCreatedQuestions = () => {
     const totalCreatedQuestions = createdQuestionsArray.length
     if (totalCreatedQuestions === 1) {
         console.log("you've created 1 question", totalCreatedQuestions)
-    } else if (totalCreatedQuestions === 3) {
+    } else if (totalCreatedQuestions === 10) {
         console.log("youve created 3 questions", totalCreatedQuestions)
     }
+}
+
+
+// Get the modal
+const modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+const btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+const span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
 }
