@@ -513,7 +513,7 @@ const countCreatedQuestions = () => {
     const totalCreatedQuestions = createdQuestionsArray.length
     if (totalCreatedQuestions === 1) {
         console.log("you've created 1 question", totalCreatedQuestions)
-    } else if (totalCreatedQuestions === 3) {
+    } else if (totalCreatedQuestions === 10) {
         console.log("youve created 3 questions", totalCreatedQuestions)
     }
 }
