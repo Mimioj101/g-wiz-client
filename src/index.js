@@ -102,7 +102,7 @@ function getAllQuestions(level, diff){
 
   //display question on flashcard
   function displayQuestion(question){
-    text.innerHTML = `<ul><li>${question.related_words[0]}</li>
+    text.innerHTML = `<ul style="margin-left: -125px"><li>${question.related_words[0]}</li>
     <li>${question.related_words[1]}</li>
     <li>${question.related_words[2]}</li>
     </ul>`
@@ -326,7 +326,7 @@ function displayUserQuestion(question, uQ){
     const li = document.createElement('li')
     createdQuestions.prepend(li)
     li.innerHTML = 
-    ` ${stringWord}
+    ` ${stringWord}<br>
         <button id="edit-btn" data-uq-id="${uQ}" data-q-id="${question.id}">Edit</button>
         <button style="background: red" id="del-btn" data-uq-id="${uQ}" data-q-id="${question.id}">X</button>`
 }
@@ -373,9 +373,9 @@ document.addEventListener('click', function(e){
         const li = document.createElement('li')
         createdQuestions.prepend(li)
         li.innerHTML = 
-        ` ${relatedWordsArr.join(', ')}
+        ` ${relatedWordsArr.join(', ')}<br>
         <button id="edit-btn" data-uq-id="${document.querySelector('#btn-edit').dataset.record}" data-q-id="${document.querySelector('#btn-edit').dataset.update}">Edit</button>
-        <button background="red" id="del-btn" data-uq-id="${document.querySelector('#btn-edit').dataset.update}" data-q-id="${document.querySelector('#btn-edit').dataset.record}">X</button>`
+        <button style="background: red" id="del-btn" data-uq-id="${document.querySelector('#btn-edit').dataset.update}" data-q-id="${document.querySelector('#btn-edit').dataset.record}">X</button>`
 
         const options = {
             method: "PATCH",
