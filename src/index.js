@@ -341,7 +341,33 @@ createdQuestions.addEventListener('click', function(e){
 })
 
 const editQuestion = (qId) => {
-    console.log("fetch")
+    
+    fetch("http://localhost:3000/questions/" + qId)
+    .then(resp => resp.json())
+    .then(question => {  
+
+        const rwOne = document.querySelector("#rw1")
+        const rwTwo = document.querySelector("#rw2")
+        const rwThree = document.querySelector("#rw3")
+        const levelDropdown = document.querySelector("#level-drpdwn")
+        const diffDropdown = document.querySelector("#difficulty-drpdwn")
+        rwOne.value = question.related_words[0]
+        rwTwo.value = question.related_words[1]
+        rwThree.value = question.related_words[2]
+        levelDropdown.value = question.level
+        diffDropdown.value = question.difficulty
+        opField1.value = question.option_1
+        opField2.value = question.option_2
+        rightAnsLabel1.innerText = question.option_1
+        rightAnsLabel2.innerText = question.option_2
+        if (question.correct_answer === 1) {
+            op1Btn.checked = true
+        } else {
+            op2Btn.checked = true
+        }
+    
+    //    fetch("http://localhost:3000/questions")
+    })
 }
 
 const deleteQuestion = (qId, uqId) => {
@@ -351,15 +377,10 @@ const deleteQuestion = (qId, uqId) => {
             "content-type": "application/json",
             "accept": "application/json"},
     }
-    // let uqId = button.dataset.uqId
 
     fetch("http://localhost:3000/user_questions/" + uqId, options)
     .then(console.log)
 
     fetch("http://localhost:3000/questions/" + qId, options)
     .then(console.log)
-
-
-    // fetch request + options to /user_questions
-    // fetch request + options to /questions
 }
