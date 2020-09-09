@@ -115,7 +115,7 @@ function getAllQuestions(level, diff){
   }
 
 loggedIn.hidden = true;
-//card_text.hidden = true;
+
 
 
 
@@ -342,7 +342,7 @@ document.addEventListener('click', function(e){
         button.parentElement.remove();
         questionForm.reset();
         rightAnsLabel1.textContent = "Option 1"
-        rightAnsLabel1.textContent = "Option 2"
+        rightAnsLabel2.textContent = "Option 2"
     } else if (button.matches('#btn-edit')){
         let updateId = button.dataset.update
         const rw1 = document.querySelector("#rw1")
@@ -375,12 +375,18 @@ document.addEventListener('click', function(e){
         } 
         fetch("http://localhost:3000/questions/" + updateId, options)
         .then(resp => resp.json())
-
+        questionForm.reset();
+        rightAnsLabel1.textContent = "Option 1"
+        rightAnsLabel2.textContent = "Option 2"
+        document.querySelector('#btn-edit').hidden = true
+        document.querySelector('#submit-create').hidden = false
     }
+
 })
 
 const editQuestion = (qId) => {
     document.querySelector('#btn-edit').hidden = false
+    document.querySelector('#submit-create').hidden = true
     document.querySelector('#btn-edit').dataset.update = qId
     
     fetch("http://localhost:3000/questions/" + qId)
