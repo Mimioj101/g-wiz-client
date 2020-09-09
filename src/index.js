@@ -36,43 +36,43 @@ let createdQuestionsArray = []
 
 //when card is clicked, a new question is pulled
 nextBtn.addEventListener('click', function(e){
-        card_text.classList.add('animate__animated', 'animate__flip');
-        pickAQuestion(filteredQ)
-        option1.style.background = 'white'
-        option2.style.background = 'white'
-        option1.disabled = false;
-        option2.disabled = false;
+    card_text.classList.add('animate__animated', 'animate__flip');
+    pickAQuestion(filteredQ)
+    option1.style.background = 'white'
+    option2.style.background = 'white'
+    option1.disabled = false;
+    option2.disabled = false;
 });
 
 
 //right & wrong option buttons
-    card_text.addEventListener('click', function(e){
-      if (e.target.matches("#option_1")){
-        option1.disabled = true;
-        option2.disabled = true;
-            if(e.target.dataset.btn === e.target.dataset.correct){
-                rightAns.push(option1.dataset.qId)
-                option1.style.background = '#57886C'
-                numRight.innerText = rightAns.length
-            } else {
-                wrongAns.push(option1.dataset.qId)
-                option1.style.background = '#E63946'
-                numWrong.innerText = wrongAns.length
-            }
-    } else if (e.target.matches("#option_2") ){
-        option1.disabled = true;
-        option2.disabled = true;
-            if(e.target.dataset.btn === e.target.dataset.correct){
-                rightAns.push(option2.dataset.qId)
-                option2.style.background = '#57886C'
-                numRight.innerText = rightAns.length
-            } else {
-                wrongAns.push(option2.dataset.qId)
-                option2.style.background = '#E63946'
-                numWrong.innerText = wrongAns.length
-            }   
-        } 
-    })
+card_text.addEventListener('click', function(e){
+    if (e.target.matches("#option_1")){
+    option1.disabled = true;
+    option2.disabled = true;
+        if(e.target.dataset.btn === e.target.dataset.correct){
+            rightAns.push(option1.dataset.qId)
+            option1.style.background = '#57886C'
+            numRight.innerText = rightAns.length
+        } else {
+            wrongAns.push(option1.dataset.qId)
+            option1.style.background = '#E63946'
+            numWrong.innerText = wrongAns.length
+        }
+} else if (e.target.matches("#option_2") ){
+    option1.disabled = true;
+    option2.disabled = true;
+        if(e.target.dataset.btn === e.target.dataset.correct){
+            rightAns.push(option2.dataset.qId)
+            option2.style.background = '#57886C'
+            numRight.innerText = rightAns.length
+        } else {
+            wrongAns.push(option2.dataset.qId)
+            option2.style.background = '#E63946'
+            numWrong.innerText = wrongAns.length
+        }   
+    } 
+})
 
 
 // sets class back to plain classname after animation flip
@@ -113,7 +113,7 @@ function getAllQuestions(level, diff){
     option2.dataset.correct = question.correct_answer
     option2.dataset.qId = question.id
   }
-
+//before user logs in
 loggedIn.hidden = true;
 
 
@@ -139,18 +139,15 @@ loginForm.addEventListener('submit', function(e){
     start();
 })
 
+//store User's ID to body tag when they log in
 const storeUser = (myUser) => {
  thisUser = body.dataset.user = myUser.id
 }
-
-
-
 
 //load game 
 function start(){
     getAllQuestions('ES', 1);
     card_text.classList.add('animate__animated', 'animate__bounceInLeft');
-
     getDifficulty('ES');
     getLevels();   
 }
@@ -208,26 +205,25 @@ function getDifficulty(level){
       })
       populateDifficultyBar(uniqValue)
   })
-  }
+}
 
-  //create options in select element for difficulties
-  function populateDifficultyBar(difficulty){
-      let sorted = difficulty.sort(function(a, b){
-        return a - b
-      })
-      difficultyBar.innerHTML = ""
-      for(let num of sorted){
-          let option = document.createElement('option')
-          option.value = num
-          option.innerText = num
-          difficultyBar.append(option)
-      }
-  }
+ //create options in select element for difficulties
+function populateDifficultyBar(difficulty){
+    let sorted = difficulty.sort(function(a, b){
+    return a - b
+    })
+    difficultyBar.innerHTML = ""
+    for(let num of sorted){
+        let option = document.createElement('option')
+        option.value = num
+        option.innerText = num
+        difficultyBar.append(option)
+    }
+}
 
 //create options in select element for levels
 function populateLevelBar(levels){
     levelBar.innerHTML = ""
-    
     let name = "";
     for(let level of levels){
         let option = document.createElement('option')
@@ -245,64 +241,66 @@ function populateLevelBar(levels){
         levelBar.append(option)
     }
 }
-//auto populate radio field
+
+//auto populate radio1 field
 opField1.addEventListener('input', function(e){
     rightAnsLabel1.textContent = e.target.value
 })
 
-//auto populate radio field
+//auto populate radio2 field
 opField2.addEventListener('input', function(e){
     rightAnsLabel2.textContent = e.target.value
 })
 
+//Grab values off Form 
 questionForm.addEventListener('submit', function(e){
     e.preventDefault();
     let button = e.target
-        console.log("created")
-        const rw1 = document.querySelector("#rw1")
-        const rw2 = document.querySelector("#rw2")
-        const rw3 = document.querySelector("#rw3")
-        const levelDrop = document.querySelector("#level-drpdwn")
-        const diffDrop = document.querySelector("#difficulty-drpdwn")
-        const op1Btn = document.querySelector("#op1Btn")
-        let relatedWordsArr = []
-        let corr_answer = 2
-    
-        if (op1Btn.checked) {
-            corr_answer = 1
-        }
-    
-        relatedWordsArr.push(rw1.value, rw2.value, rw3.value)
-    
-        const options = {
-            method: "POST",
-            headers: {
-                "content-type": "application/json",
-                "accept": "application/json"},
-            body: JSON.stringify({
-                related_words: relatedWordsArr,
-                option_1: opField1.value,
-                option_2: opField2.value,
-                correct_answer: corr_answer,
-                level: levelDrop.value,
-                difficulty: diffDrop.value})
-        }
-    
-        fetch("http://localhost:3000/questions", options)
-        .then(resp => resp.json())
-        .then(function(question){
-            updateUserQuestions(question)
-            createdQuestionsArray.push(question)
-            updateNumQuestions()
-        })
-        questionForm.reset();
-        rightAnsLabel1.textContent = "Option 1"
-        rightAnsLabel2.textContent = "Option 2"
+    const rw1 = document.querySelector("#rw1")
+    const rw2 = document.querySelector("#rw2")
+    const rw3 = document.querySelector("#rw3")
+    const levelDrop = document.querySelector("#level-drpdwn")
+    const diffDrop = document.querySelector("#difficulty-drpdwn")
+    const op1Btn = document.querySelector("#op1Btn")
+    let relatedWordsArr = []
+    let corr_answer = 2
+
+    if (op1Btn.checked) {
+        corr_answer = 1
+    }
+
+    relatedWordsArr.push(rw1.value, rw2.value, rw3.value)
+
+    //create config options for API call to create a new obj
+    const options = {
+        method: "POST",
+        headers: {
+            "content-type": "application/json",
+            "accept": "application/json"},
+        body: JSON.stringify({
+            related_words: relatedWordsArr,
+            option_1: opField1.value,
+            option_2: opField2.value,
+            correct_answer: corr_answer,
+            level: levelDrop.value,
+            difficulty: diffDrop.value})
+    }
+
+    fetch("http://localhost:3000/questions", options)
+    .then(resp => resp.json())
+    .then(function(question){
+        updateUserQuestions(question)
+        createdQuestionsArray.push(question)
+        updateNumQuestions()
+    })
+    //reset form
+    questionForm.reset();
+    rightAnsLabel1.textContent = "Option 1"
+    rightAnsLabel2.textContent = "Option 2"
     
 })
 
-
-
+//creates a record in user_questions table
 function updateUserQuestions(question){
     const config = {
         method: "POST",
@@ -313,12 +311,13 @@ function updateUserQuestions(question){
             user_id: thisUser,
             question_id: question.id})
     }
-
+    //make post request
     fetch("http://localhost:3000/user_questions", config)
     .then(resp => resp.json())
     .then(uQ => displayUserQuestion(question, uQ.id))
 }
 
+//create an li for each question created by user. Display related words in createdQuestions div
 function displayUserQuestion(question, uQ){
     const stringWord = question.related_words.join(", ")
     const li = document.createElement('li')
@@ -329,10 +328,19 @@ function displayUserQuestion(question, uQ){
         <button id="del-btn" data-uq-id="${uQ}" data-q-id="${question.id}">Delete</button>`
 }
 
+//changes the innerText of Created Questions under Stats
 function updateNumQuestions(){
     numQuestions.innerText = createdQuestionsArray.length
 }  
 
+//resets form whenever user clicks submit or update on form
+function resetForm(){
+    questionForm.reset();
+    rightAnsLabel1.textContent = "Option 1"
+    rightAnsLabel2.textContent = "Option 2"
+}
+
+//listens for clicks on li edit btn, li delete btn, and form submit-edit btn
 document.addEventListener('click', function(e){
     const button = e.target
     if (button.matches('#edit-btn')) {
@@ -340,9 +348,7 @@ document.addEventListener('click', function(e){
     } else if (button.matches('#del-btn')){
         deleteQuestion(button.dataset.qId, button.dataset.uqId)
         button.parentElement.remove();
-        questionForm.reset();
-        rightAnsLabel1.textContent = "Option 1"
-        rightAnsLabel2.textContent = "Option 2"
+        resetForm();
     } else if (button.matches('#btn-edit')){
         let updateId = button.dataset.update
         const rw1 = document.querySelector("#rw1")
@@ -375,15 +381,14 @@ document.addEventListener('click', function(e){
         } 
         fetch("http://localhost:3000/questions/" + updateId, options)
         .then(resp => resp.json())
-        questionForm.reset();
-        rightAnsLabel1.textContent = "Option 1"
-        rightAnsLabel2.textContent = "Option 2"
+        resetForm();
         document.querySelector('#btn-edit').hidden = true
         document.querySelector('#submit-create').hidden = false
     }
 
 })
 
+//fetches question by Id and populates form fields
 const editQuestion = (qId) => {
     document.querySelector('#btn-edit').hidden = false
     document.querySelector('#submit-create').hidden = true
@@ -412,9 +417,10 @@ const editQuestion = (qId) => {
         } else {
             op2Btn.checked = true
         }
-     })
+    })
 }
 
+//removes record from table and updates stats info
 const deleteQuestion = (qId, uqId) => {
     const options = {
         method: "DELETE",
@@ -423,10 +429,7 @@ const deleteQuestion = (qId, uqId) => {
             "accept": "application/json"},
     }
     fetch("http://localhost:3000/user_questions/" + uqId, options)
-    .then(console.log)
-
     fetch("http://localhost:3000/questions/" + qId, options)
-    .then(console.log)
     createdQuestionsArray.pop();
     updateNumQuestions();
 }
