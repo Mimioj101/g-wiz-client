@@ -319,6 +319,9 @@ function updateUserQuestions(question){
 
 //create an li for each question created by user. Display related words in createdQuestions div
 function displayUserQuestion(question, uQ){
+    // if(typeof question != string){
+    //     question = question.id
+    // }
     const stringWord = question.related_words.join(", ")
     const li = document.createElement('li')
     createdQuestions.append(li)
@@ -344,7 +347,7 @@ function resetForm(){
 document.addEventListener('click', function(e){
     const button = e.target
     if (button.matches('#edit-btn')) {
-        editQuestion(button.dataset.qId)
+        editQuestion(button.dataset.qId, button.dataset.uqId)
     } else if (button.matches('#del-btn')){
         deleteQuestion(button.dataset.qId, button.dataset.uqId)
         button.parentElement.remove();
@@ -366,6 +369,13 @@ document.addEventListener('click', function(e){
     
         relatedWordsArr.push(rw1.value, rw2.value, rw3.value)
     
+        const li = document.createElement('li')
+        createdQuestions.append(li)
+        li.innerHTML = 
+        ` ${relatedWordsArr.join(', ')}
+        <button id="edit-btn" data-uq-id="${document.querySelector('#btn-edit').dataset.record}" data-q-id="${document.querySelector('#btn-edit').dataset.update}">Edit</button>
+        <button id="del-btn" data-uq-id="${document.querySelector('#btn-edit').dataset.update}" data-q-id="${document.querySelector('#btn-edit').dataset.record}">Delete</button>`
+
         const options = {
             method: "PATCH",
             headers: {
@@ -389,10 +399,14 @@ document.addEventListener('click', function(e){
 })
 
 //fetches question by Id and populates form fields
-const editQuestion = (qId) => {
+const editQuestion = (qId, uqId) => {
     document.querySelector('#btn-edit').hidden = false
     document.querySelector('#submit-create').hidden = true
     document.querySelector('#btn-edit').dataset.update = qId
+    document.querySelector('#btn-edit').dataset.record = uqId
+    //might work
+    
+        //end test above
     
     fetch("http://localhost:3000/questions/" + qId)
     .then(resp => resp.json())
