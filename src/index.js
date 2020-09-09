@@ -324,7 +324,7 @@ function displayUserQuestion(question, uQ){
     // }
     const stringWord = question.related_words.join(", ")
     const li = document.createElement('li')
-    createdQuestions.append(li)
+    createdQuestions.prepend(li)
     li.innerHTML = 
     ` ${stringWord}
         <button id="edit-btn" data-uq-id="${uQ}" data-q-id="${question.id}">Edit</button>
@@ -348,6 +348,7 @@ document.addEventListener('click', function(e){
     const button = e.target
     if (button.matches('#edit-btn')) {
         editQuestion(button.dataset.qId, button.dataset.uqId)
+        button.parentElement.remove();
     } else if (button.matches('#del-btn')){
         deleteQuestion(button.dataset.qId, button.dataset.uqId)
         button.parentElement.remove();
@@ -370,7 +371,7 @@ document.addEventListener('click', function(e){
         relatedWordsArr.push(rw1.value, rw2.value, rw3.value)
     
         const li = document.createElement('li')
-        createdQuestions.append(li)
+        createdQuestions.prepend(li)
         li.innerHTML = 
         ` ${relatedWordsArr.join(', ')}
         <button id="edit-btn" data-uq-id="${document.querySelector('#btn-edit').dataset.record}" data-q-id="${document.querySelector('#btn-edit').dataset.update}">Edit</button>
