@@ -27,6 +27,7 @@ const createdQuestions = document.querySelector('#created_questions')
 const numQuestions = document.querySelector('#num-questions')
 const editBtn = document.querySelector('#edit-btn')
 const delBtn = document.querySelector('#del-btn')
+let consecutiveRight = 0
 let filteredQ = []
 let rightAns = []
 let wrongAns = []
@@ -49,16 +50,21 @@ nextBtn.addEventListener('click', function(e){
 card_text.addEventListener('click', function(e){
     if (e.target.matches("#option_1")){
     option1.disabled = true;
-    option2.disabled = true;
+    option2.disabled = true;   
         if(e.target.dataset.btn === e.target.dataset.correct){
             rightAns.push(option1.dataset.qId)
             option1.style.background = '#57886C'
             numRight.innerHTML = `<br>${rightAns.length}`
+            countCorrectQuestions();
+            countConsecutiveRight(true);
         } else {
             wrongAns.push(option1.dataset.qId)
             option1.style.background = '#E63946'
             numWrong.innerHTML = `<br>${wrongAns.length}`
+            countWrongQuestions();
+            countConsecutiveRight(false);
         }
+    countQuestionsAnswered();
 } else if (e.target.matches("#option_2") ){
     option1.disabled = true;
     option2.disabled = true;
@@ -66,11 +72,16 @@ card_text.addEventListener('click', function(e){
             rightAns.push(option2.dataset.qId)
             option2.style.background = '#57886C'
             numRight.innerHTML = `<br>${rightAns.length}`
+            countCorrectQuestions();
+            countConsecutiveRight(true);
         } else {
             wrongAns.push(option2.dataset.qId)
             option2.style.background = '#E63946'
             numWrong.innerHTML = `<br>${wrongAns.length}`
-        }   
+            countWrongQuestions();
+            countConsecutiveRight(false);
+        }
+    countQuestionsAnswered();   
     } 
 })
 
@@ -289,9 +300,10 @@ questionForm.addEventListener('submit', function(e){
     fetch("http://localhost:3000/questions", options)
     .then(resp => resp.json())
     .then(function(question){
-        updateUserQuestions(question)
-        createdQuestionsArray.push(question)
-        updateNumQuestions()
+        updateUserQuestions(question);
+        createdQuestionsArray.push(question);
+        updateNumQuestions();
+        countCreatedQuestions();
     })
     //reset form
     questionForm.reset();
@@ -447,4 +459,61 @@ const deleteQuestion = (qId, uqId) => {
     fetch("http://localhost:3000/questions/" + qId, options)
     createdQuestionsArray.pop();
     updateNumQuestions();
+}
+
+///////////// BADGES //////////////////
+
+const countQuestionsAnswered = () => {
+    const totalQuestionsAnswered = rightAns.length + wrongAns.length
+    if (totalQuestionsAnswered === 10) {
+        console.log("answered", totalQuestionsAnswered)
+    } else if (totalQuestionsAnswered === 30) {
+        console.log("answered", totalQuestionsAnswered)
+    }
+    
+}
+
+const countCorrectQuestions = () => {
+    const totalRightAnswers = rightAns.length
+    if (totalRightAnswers === 1) {
+        console.log("right", totalRightAnswers)
+    } else if (totalRightAnswers === 5) {
+        console.log("right", totalRightAnswers)
+    } else if (totalRightAnswers === 25) {
+        console.log("right", totalRightAnswers)
+    }
+}
+
+const countWrongQuestions = () => {
+    const totalWrongQuestions = wrongAns.length
+    if (totalWrongQuestions === 1) {
+        console.log("wrong", totalWrongQuestions)
+    } else if (totalWrongQuestions === 25) {
+        console.log("wrong", totalWrongQuestions)
+    }
+}
+
+const countConsecutiveRight = (isRight) => {
+    if (isRight) {
+        consecutiveRight += 1
+    } else {
+        consecutiveRight = 0
+    }
+
+    if (consecutiveRight === 5) {
+        console.log("consecutive right:", consecutiveRight)
+    } else if (consecutiveRight === 10) {
+        console.log("consecutive right:", consecutiveRight)
+    } else if (consecutiveRight === 25) {
+        console.log("consecutive right:", consecutiveRight)
+    }
+}
+
+const countCreatedQuestions = () => {
+    const totalCreatedQuestions = createdQuestionsArray.length
+    if (totalCreatedQuestions === 1) {
+        console.log("you've created 1 question", totalCreatedQuestions)
+    } else if (totalCreatedQuestions === 3) {
+        console.log("youve created 3 questions", totalCreatedQuestions)
+    }
 }
