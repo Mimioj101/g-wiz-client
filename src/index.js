@@ -292,15 +292,15 @@ questionForm.addEventListener('submit', function(e){
     .then(resp => resp.json())
     //.then(question => updateUserQuestions(question.id))
     .then(function(question){
-        updateUserQuestions(question.id)
-        displayUserQuestion(question)
+        updateUserQuestions(question)
+        //displayUserQuestion(question)
         createdQuestionsArray.push(question)
         updateNumQuestions()
     })
     questionForm.reset();
 })
 
-function updateUserQuestions(questionId){
+function updateUserQuestions(question){
     const config = {
         method: "POST",
         headers: {
@@ -308,22 +308,22 @@ function updateUserQuestions(questionId){
             "accept": "application/json"},
         body: JSON.stringify({
             user_id: thisUser,
-            question_id: questionId})
+            question_id: question.id})
     }
 
     fetch("http://localhost:3000/user_questions", config)
     .then(resp => resp.json())
-    .then()
+    .then(uQ => displayUserQuestion(question, uQ.id))
 }
 
-function displayUserQuestion(question){
+function displayUserQuestion(question, uQ){
     const stringWord = question.related_words.join(", ")
     const li = document.createElement('li')
     createdQuestions.append(li)
     li.innerHTML = 
     ` ${stringWord}
-        <button id="edit-btn" data-q-id="${question.id}">Edit</button>
-        <button id="del-btn" data-q-id="${question.id}">Delete</button>`
+        <button id="edit-btn" data-uq-id="${uQ}" data-q-id="${question.id}">Edit</button>
+        <button id="del-btn" data-uq-id="${uQ}" data-q-id="${question.id}">Delete</button>`
 }
 
 function updateNumQuestions(){
@@ -352,7 +352,7 @@ const deleteQuestion = (qId) => {
             "accept": "application/json"},
     }
     
-    // fetch("http://localhost:3000/user_questions/", options)
-    // fetch request + options to /user_questions
-    // fetch request + options to /questions
+    fetch("http://localhost:3000/user_questions/", options)
+    fetch request + options to /user_questions
+    fetch request + options to /questions
 }
