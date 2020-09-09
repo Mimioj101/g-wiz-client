@@ -259,45 +259,48 @@ opField2.addEventListener('input', function(e){
 questionForm.addEventListener('submit', function(e){
     e.preventDefault();
     const button = e.target
-    const rw1 = document.querySelector("#rw1")
-    const rw2 = document.querySelector("#rw2")
-    const rw3 = document.querySelector("#rw3")
-    const levelDrop = document.querySelector("#level-drpdwn")
-    const diffDrop = document.querySelector("#difficulty-drpdwn")
-    const op1Btn = document.querySelector("#op1Btn")
-    let relatedWordsArr = []
-    let corr_answer = 2
+    if (button.matches('#submit-create')){
+        const rw1 = document.querySelector("#rw1")
+        const rw2 = document.querySelector("#rw2")
+        const rw3 = document.querySelector("#rw3")
+        const levelDrop = document.querySelector("#level-drpdwn")
+        const diffDrop = document.querySelector("#difficulty-drpdwn")
+        const op1Btn = document.querySelector("#op1Btn")
+        let relatedWordsArr = []
+        let corr_answer = 2
+    
+        if (op1Btn.checked) {
+            corr_answer = 1
+        }
+    
+        relatedWordsArr.push(rw1.value, rw2.value, rw3.value)
+    
+        const options = {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                "accept": "application/json"},
+            body: JSON.stringify({
+                related_words: relatedWordsArr,
+                option_1: opField1.value,
+                option_2: opField2.value,
+                correct_answer: corr_answer,
+                level: levelDrop.value,
+                difficulty: diffDrop.value})
+        }
+    
+        fetch("http://localhost:3000/questions", options)
+        .then(resp => resp.json())
+        .then(function(question){
+            updateUserQuestions(question)
+            //displayUserQuestion(question)
+            createdQuestionsArray.push(question)
+            updateNumQuestions()
+        })
+        questionForm.reset();
+    } else if (button.matches('#submit-edit')){
 
-    if (op1Btn.checked) {
-        corr_answer = 1
     }
-
-    relatedWordsArr.push(rw1.value, rw2.value, rw3.value)
-
-    const options = {
-        method: "POST",
-        headers: {
-            "content-type": "application/json",
-            "accept": "application/json"},
-        body: JSON.stringify({
-            related_words: relatedWordsArr,
-            option_1: opField1.value,
-            option_2: opField2.value,
-            correct_answer: corr_answer,
-            level: levelDrop.value,
-            difficulty: diffDrop.value})
-    }
-
-    fetch("http://localhost:3000/questions", options)
-    .then(resp => resp.json())
-    //.then(question => updateUserQuestions(question.id))
-    .then(function(question){
-        updateUserQuestions(question)
-        //displayUserQuestion(question)
-        createdQuestionsArray.push(question)
-        updateNumQuestions()
-    })
-    questionForm.reset();
 })
 
 function updateUserQuestions(question){
@@ -365,8 +368,33 @@ const editQuestion = (qId) => {
         } else {
             op2Btn.checked = true
         }
+
+        let relatedWordsArray = []
+        let corr_ans = 2
     
-    //    fetch("http://localhost:3000/questions")
+        if (op1Btn.checked) {
+            corr_ans = 1
+        }
+    
+        relatedWordsArray.push(rwOne.value, rwTwo.value, rwThree.value)
+    
+        const updateOptions = {
+            method: "PATCH",
+            headers: {
+                "content-type": "application/json",
+                "accept": "application/json"},
+            body: JSON.stringify({
+                related_words: relatedWordsArray,
+                option_1: opField1.value,
+                option_2: opField2.value,
+                correct_answer: corr_ans,
+                level: levelDropdown.value,
+                difficulty: diffDropdown.value})
+        }
+    
+       fetch("http://localhost:3000/questions/" + qId, updateOptions)
+       .then(resp => resp.json())
+       .then(console.log)
     })
 }
 
