@@ -6,16 +6,19 @@
     height: 50px;
     color: white;
     border-radius: 15px;
+    margin-top: -35px;
   }
 
     .grid-container {
         display: grid;
-        grid-template-columns: auto auto auto;
+        grid-template-columns: 25% 50% 25%;
         grid-gap: 10px;
         background-color: #a8dadc;
         padding: 10px;
         width: auto;
         height: auto;
+        margin-left: -6px;
+        margin-right: 13px;
         
     }
 
@@ -36,7 +39,7 @@
     }
     .item3 {
       grid-row: 2 / span 1;
-      margin-top: -190px;
+      margin-top: -21px;
       padding-top: 0px;
       padding-bottom: 0px;
 
@@ -46,7 +49,7 @@
     }
     .item5 {
       grid-row: 1 / span 3;
-      height: 820px;
+      /* height: 820px; */
     }
 
     h6 {
@@ -66,9 +69,9 @@
     }
 
     .card_text {
-        min-width: 100%;
+        /* min-width: 100%;
         min-height: 100%;
-        margin-bottom: -145px;
+        margin-bottom: -145px; */
       }
 
     h6 ul li{
@@ -108,7 +111,7 @@
     }
 
     .item2 {
-      height: 50px;
+      /* height: 50px; */
       margin-bottom: 20px
     }
 
@@ -116,14 +119,16 @@
       width: 100px;
       height: 75px;
       border-radius: 15px;
-      margin-top: 50px;
+      /* margin-top: 50px; */
       /* margin-top: -150px; */
     }
 
-    /* #next_question {
-      margin-top: -73px;
+    button#next_question {
+      position: absolute;
+      /* margin-top: -73px; */
       font-size: 20px;
-    } */
+      margin-left: 7px;
+    }
 
     .item5 h6 {
       margin-top: 0px;
@@ -136,5 +141,43 @@
     .name-form {
       position: relative;
       text-align: center;
-      margin-top: -100px;
+      /* margin-top: -100px; */
+      margin-top: -65px;
+    }
+
+    input#username {
+      font-size: 25px;
+      font-family: 'Press Start 2P', cursive;
+      width: 250px;
+      text-align: center;
+      margin-left: -155px;
+    }
+
+    .name-form input[type="submit" i] {
+      border-radius: 15px;
+      font-size: 25px;
+      position: absolute;
+    margin-top: -1px;
+    margin-left: 25px;
+    }
+
+    h5 {
+      font-family: 'Press Start 2P', cursive;
+      color: white;
+      text-align: center;
+      position: relative;
+      margin-top: -125px;
+      font-size: 60px;
+    }
+
+    #created_questions {
+      text-align: left;
+    }
+
+    .card h6 ul {
+      margin-left: -125px;
+    }
+
+    #option_1{
+      margin-left: -140px;
     }
