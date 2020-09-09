@@ -30,6 +30,7 @@ const delBtn = document.querySelector('#del-btn');
 // MODAL SHIT //
 const modal = document.getElementById("myModal");
 const modalBtn = document.getElementById("myBtn");
+let modalText = document.querySelector('#modal-text')
 // const span = document.getElementsByClassName("close")[0];
 // MODAL SHIT //
 let consecutiveRight = 0
@@ -472,10 +473,10 @@ const countQuestionsAnswered = () => {
     const totalQuestionsAnswered = rightAns.length + wrongAns.length
     if (totalQuestionsAnswered === 10) {
         modalBtn.click();
-        console.log("answered", totalQuestionsAnswered)
+        modalText.innerText = "Congrats, You've answered 10 questions!"
     } else if (totalQuestionsAnswered === 30) {
         modalBtn.click();
-        console.log("answered", totalQuestionsAnswered)
+        modalText.innerText = "Congrats, You've answered 30 questions!"
     }
     
 }
@@ -483,25 +484,25 @@ const countQuestionsAnswered = () => {
 const countCorrectQuestions = () => {
     const totalRightAnswers = rightAns.length
     if (totalRightAnswers === 1) {
+        modalText.innerText = "Congrats, you've answered 1 question correctly!"
         modalBtn.click();
-        console.log("right", totalRightAnswers)
     } else if (totalRightAnswers === 5) {
+        modalText.innerText = "Congrats, you've answered 5 questions correctly!"
         modalBtn.click();
-        console.log("right", totalRightAnswers)
     } else if (totalRightAnswers === 25) {
+        modalText.innerText = "Congrats, you've answered 25 questions correctly!"
         modalBtn.click();
-        console.log("right", totalRightAnswers)
     }
 }
 
 const countWrongQuestions = () => {
     const totalWrongQuestions = wrongAns.length
     if (totalWrongQuestions === 1) {
+        modalText.innerText = "Congrats! You're an Idiot! You've answered 1 question incorrectly."
         modalBtn.click();
-        console.log("wrong", totalWrongQuestions)
     } else if (totalWrongQuestions === 25) {
+        modalText.innerText = "Congrats! You're an Idiot! You've answered 25 questions incorrectly."
         modalBtn.click();
-        console.log("wrong", totalWrongQuestions)
     }
 }
 
@@ -513,25 +514,25 @@ const countConsecutiveRight = (isRight) => {
     }
 
     if (consecutiveRight === 5) {
+        modalText.innerText = "Congrats, You've correctly answered 5 consecutive questions!"
         modalBtn.click();
-        console.log("consecutive right:", consecutiveRight)
     } else if (consecutiveRight === 10) {
+        modalText.innerText = "Congrats, You've correctly answered 10 consecutive questions!"
         modalBtn.click();
-        console.log("consecutive right:", consecutiveRight)
     } else if (consecutiveRight === 25) {
+        modalText.innerText = "Congrats, You've correctly answered 25 consecutive questions!"
         modalBtn.click();
-        console.log("consecutive right:", consecutiveRight)
     }
 }
 
 const countCreatedQuestions = () => {
     const totalCreatedQuestions = createdQuestionsArray.length
     if (totalCreatedQuestions === 1) {
+        modalText.innerText = "Wow, You've contributed your 1st question! Thanks!"
         modalBtn.click();
-        console.log("you've created 1 question", totalCreatedQuestions)
     } else if (totalCreatedQuestions === 10) {
+        modalText.innerText = "Wow, You've contributed your 10th question! Thanks!"
         modalBtn.click();
-        console.log("youve created 3 questions", totalCreatedQuestions)
     }
 }
 
