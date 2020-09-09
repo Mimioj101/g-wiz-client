@@ -53,11 +53,11 @@ card_text.addEventListener('click', function(e){
         if(e.target.dataset.btn === e.target.dataset.correct){
             rightAns.push(option1.dataset.qId)
             option1.style.background = '#57886C'
-            numRight.innerText = rightAns.length
+            numRight.innerHTML = `<br>${rightAns.length}`
         } else {
             wrongAns.push(option1.dataset.qId)
             option1.style.background = '#E63946'
-            numWrong.innerText = wrongAns.length
+            numWrong.innerHTML = `<br>${wrongAns.length}`
         }
 } else if (e.target.matches("#option_2") ){
     option1.disabled = true;
@@ -65,11 +65,11 @@ card_text.addEventListener('click', function(e){
         if(e.target.dataset.btn === e.target.dataset.correct){
             rightAns.push(option2.dataset.qId)
             option2.style.background = '#57886C'
-            numRight.innerText = rightAns.length
+            numRight.innerHTML = `<br>${rightAns.length}`
         } else {
             wrongAns.push(option2.dataset.qId)
             option2.style.background = '#E63946'
-            numWrong.innerText = wrongAns.length
+            numWrong.innerHTML = `<br>${wrongAns.length}`
         }   
     } 
 })
@@ -333,7 +333,7 @@ function displayUserQuestion(question, uQ){
 
 //changes the innerText of Created Questions under Stats
 function updateNumQuestions(){
-    numQuestions.innerText = createdQuestionsArray.length
+    numQuestions.innerHTML = `<br>${createdQuestionsArray.length}`
 }  
 
 //resets form whenever user clicks submit or update on form
