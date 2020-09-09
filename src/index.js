@@ -25,6 +25,8 @@ const questionForm = document.querySelector('#question-form')
 const body = document.querySelector('.login')
 const createdQuestions = document.querySelector('#created_questions')
 const numQuestions = document.querySelector('#num-questions')
+const editBtn = document.querySelector('#edit-btn')
+const delBtn = document.querySelector('#del-btn')
 let filteredQ = []
 let rightAns = []
 let wrongAns = []
@@ -49,11 +51,11 @@ nextBtn.addEventListener('click', function(e){
         option1.disabled = true;
         option2.disabled = true;
             if(e.target.dataset.btn === e.target.dataset.correct){
-                rightAns.push(option1.dataset.q_id)
+                rightAns.push(option1.dataset.qId)
                 option1.style.background = '#57886C'
                 numRight.innerText = rightAns.length
             } else {
-                wrongAns.push(option1.dataset.q_id)
+                wrongAns.push(option1.dataset.qId)
                 option1.style.background = '#E63946'
                 numWrong.innerText = wrongAns.length
             }
@@ -61,11 +63,11 @@ nextBtn.addEventListener('click', function(e){
         option1.disabled = true;
         option2.disabled = true;
             if(e.target.dataset.btn === e.target.dataset.correct){
-                rightAns.push(option2.dataset.q_id)
+                rightAns.push(option2.dataset.qId)
                 option2.style.background = '#57886C'
                 numRight.innerText = rightAns.length
             } else {
-                wrongAns.push(option2.dataset.q_id)
+                wrongAns.push(option2.dataset.qId)
                 option2.style.background = '#E63946'
                 numWrong.innerText = wrongAns.length
             }   
@@ -106,10 +108,10 @@ function getAllQuestions(level, diff){
     </ul>`
     option1.innerText = question.option_1
     option1.dataset.correct = question.correct_answer
-    option1.dataset.q_id = question.id
+    option1.dataset.qId = question.id
     option2.innerText = question.option_2
     option2.dataset.correct = question.correct_answer
-    option2.dataset.q_id = question.id
+    option2.dataset.qId = question.id
   }
 
 loggedIn.hidden = true;
@@ -315,12 +317,42 @@ function updateUserQuestions(questionId){
 }
 
 function displayUserQuestion(question){
-    const li = document.createElement('li')
     const stringWord = question.related_words.join(", ")
-    li.innerText = stringWord
+    const li = document.createElement('li')
     createdQuestions.append(li)
+    li.innerHTML = 
+    ` ${stringWord}
+        <button id="edit-btn" data-q-id="${question.id}">Edit</button>
+        <button id="del-btn" data-q-id="${question.id}">Delete</button>`
 }
 
 function updateNumQuestions(){
     numQuestions.innerText = createdQuestionsArray.length
 }  
+
+createdQuestions.addEventListener('click', function(e){
+    const button = e.target
+    if (button.matches('#edit-btn')) {
+        editQuestion(button.dataset.qId)
+    } else if (button.matches('#del-btn')){
+        deleteQuestion(button.dataset.qId)
+    }
+})
+
+const editQuestion = (qId) => {
+    console.log("fetch")
+}
+
+const deleteQuestion = (qId) => {
+    console.log("Betch")
+    const options = {
+        method: "DELETE",
+        headers: {
+            "content-type": "application/json",
+            "accept": "application/json"},
+    }
+    
+    // fetch("http://localhost:3000/user_questions/", options)
+    // fetch request + options to /user_questions
+    // fetch request + options to /questions
+}
