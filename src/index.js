@@ -29,8 +29,8 @@ const editBtn = document.querySelector('#edit-btn');
 const delBtn = document.querySelector('#del-btn');
 // MODAL SHIT //
 const modal = document.getElementById("myModal");
-const btn = document.getElementById("myBtn");
-const span = document.getElementsByClassName("close")[0];
+const modalBtn = document.getElementById("myBtn");
+// const span = document.getElementsByClassName("close")[0];
 // MODAL SHIT //
 let consecutiveRight = 0
 let filteredQ = []
@@ -471,8 +471,10 @@ const deleteQuestion = (qId, uqId) => {
 const countQuestionsAnswered = () => {
     const totalQuestionsAnswered = rightAns.length + wrongAns.length
     if (totalQuestionsAnswered === 10) {
+        modalBtn.click();
         console.log("answered", totalQuestionsAnswered)
     } else if (totalQuestionsAnswered === 30) {
+        modalBtn.click();
         console.log("answered", totalQuestionsAnswered)
     }
     
@@ -481,10 +483,13 @@ const countQuestionsAnswered = () => {
 const countCorrectQuestions = () => {
     const totalRightAnswers = rightAns.length
     if (totalRightAnswers === 1) {
+        modalBtn.click();
         console.log("right", totalRightAnswers)
     } else if (totalRightAnswers === 5) {
+        modalBtn.click();
         console.log("right", totalRightAnswers)
     } else if (totalRightAnswers === 25) {
+        modalBtn.click();
         console.log("right", totalRightAnswers)
     }
 }
@@ -492,8 +497,10 @@ const countCorrectQuestions = () => {
 const countWrongQuestions = () => {
     const totalWrongQuestions = wrongAns.length
     if (totalWrongQuestions === 1) {
+        modalBtn.click();
         console.log("wrong", totalWrongQuestions)
     } else if (totalWrongQuestions === 25) {
+        modalBtn.click();
         console.log("wrong", totalWrongQuestions)
     }
 }
@@ -506,10 +513,13 @@ const countConsecutiveRight = (isRight) => {
     }
 
     if (consecutiveRight === 5) {
+        modalBtn.click();
         console.log("consecutive right:", consecutiveRight)
     } else if (consecutiveRight === 10) {
+        modalBtn.click();
         console.log("consecutive right:", consecutiveRight)
     } else if (consecutiveRight === 25) {
+        modalBtn.click();
         console.log("consecutive right:", consecutiveRight)
     }
 }
@@ -517,31 +527,23 @@ const countConsecutiveRight = (isRight) => {
 const countCreatedQuestions = () => {
     const totalCreatedQuestions = createdQuestionsArray.length
     if (totalCreatedQuestions === 1) {
+        modalBtn.click();
         console.log("you've created 1 question", totalCreatedQuestions)
     } else if (totalCreatedQuestions === 10) {
+        modalBtn.click();
         console.log("youve created 3 questions", totalCreatedQuestions)
     }
 }
 
+// open the modal 
+modalBtn.addEventListener('click', function(e){
+    modal.style.display = "block";
+})
 
-// Get the modal
-const modal = document.getElementById("myModal");
-
-// Get the button that opens the modal
-const btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-const span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
+// When the user clicks on (x), close the modal
+// span.onclick = function() {
+//   modal.style.display = "none";
+// }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {

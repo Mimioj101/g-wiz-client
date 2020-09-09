@@ -179,6 +179,7 @@
       margin-left: -140px;
     }
 
+    /* MODAL SHIT */
     .modal {
       display: none; /* Hidden by default */
       position: fixed; /* Stay in place */
@@ -203,16 +204,17 @@
     }
     
     /* The Close Button */
-    .close {
+    /* .close {
       color: #aaaaaa;
       float: right;
       font-size: 28px;
       font-weight: bold;
-    }
+    } */
     
-    .close:hover,
+    /* .close:hover,
     .close:focus {
       color: #000;
       text-decoration: none;
       cursor: pointer;
-    }
+    } */
+    /* MODAL SHIT */
