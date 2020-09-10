@@ -31,6 +31,10 @@ const delBtn = document.querySelector('#del-btn');
 const modal = document.getElementById("myModal");
 const modalBtn = document.getElementById("myBtn");
 let modalText = document.querySelector('#modal-text')
+const item1 = document.querySelector('.item1')
+const item2 = document.querySelector('.item2')
+const item4 = document.querySelector('.item4')
+const item5 = document.querySelector('.item5')
 // const span = document.getElementsByClassName("close")[0];
 // MODAL SHIT //
 let consecutiveRight = 0
@@ -38,6 +42,7 @@ let filteredQ = []
 let rightAns = []
 let wrongAns = []
 let createdQuestionsArray = []
+let shown = 0
 // let thisUser = 0
 
 
@@ -140,7 +145,7 @@ loggedIn.hidden = true;
 loginForm.addEventListener('submit', function(e){
     e.preventDefault();
     loggedIn.hidden = false;
-    login.style.backgroundColor = '#a8dadc';
+    //login.style.backgroundColor = '#a8dadc';
     //login.children[0].remove();
     logo.hidden = true
     loginForm.hidden = true
@@ -163,6 +168,7 @@ const storeUser = (myUser) => {
 
 //load game 
 function start(){
+    elementaryColorBoard();
     getAllQuestions('ES', 1);
     card_text.classList.add('animate__animated', 'animate__bounceInLeft');
     getDifficulty('ES');
@@ -247,6 +253,7 @@ function populateLevelBar(levels){
         option.value = level
         if(level == 'ES'){
             name = 'Elementary School'
+            elementaryColorBoard();
         } else if(level == 'MS'){
             name = 'Middle School'
         } else if (level == 'HS'){
@@ -472,11 +479,13 @@ const deleteQuestion = (qId, uqId) => {
 const countQuestionsAnswered = () => {
     const totalQuestionsAnswered = rightAns.length + wrongAns.length
     if (totalQuestionsAnswered === 10) {
+        modalText.innerHTML = `Congrats, You've answered 10 questions!<br><img src="./styles/orange10.png"width='300px'>`
         modalBtn.click();
-        modalText.innerText = "Congrats, You've answered 10 questions!"
+        document.querySelector('#orange10').hidden = false
     } else if (totalQuestionsAnswered === 30) {
+        modalText.innerHTML = `Congrats, You've answered 30 questions!<br><img src="./styles/orange30.png"width='300px'>`
         modalBtn.click();
-        modalText.innerText = "Congrats, You've answered 30 questions!"
+        document.querySelector('#orange30').hidden = false
     }
     
 }
@@ -484,25 +493,30 @@ const countQuestionsAnswered = () => {
 const countCorrectQuestions = () => {
     const totalRightAnswers = rightAns.length
     if (totalRightAnswers === 1) {
-        modalText.innerText = "Congrats, you've answered 1 question correctly!"
+        modalText.innerHTML = `Congrats, you've answered 1 question correctly!<br><img src="./styles/green1.png"width='300px'>`
         modalBtn.click();
+        document.querySelector('#green1').hidden = false
     } else if (totalRightAnswers === 5) {
-        modalText.innerText = "Congrats, you've answered 5 questions correctly!"
+        modalText.innerHTML = `Congrats, you've answered 5 question correctly!<br><img src="./styles/green5.png"width='300px'>`
         modalBtn.click();
+        document.querySelector('#green5').hidden = false
     } else if (totalRightAnswers === 25) {
-        modalText.innerText = "Congrats, you've answered 25 questions correctly!"
+        modalText.innerHTML = `Congrats, you've answered 25 question correctly!<br><img src="./styles/green25.png"width='300px'>`
         modalBtn.click();
+        document.querySelector('#green25').hidden = false
     }
 }
 
 const countWrongQuestions = () => {
     const totalWrongQuestions = wrongAns.length
     if (totalWrongQuestions === 1) {
-        modalText.innerText = "Congrats! You're an Idiot! You've answered 1 question incorrectly."
+        modalText.innerHTML = `Congrats! You're an Idiot! You've answered 1 question incorrectly.<br><img src="./styles/red1.png"width='300px'>`
         modalBtn.click();
+        document.querySelector('#red1').hidden = false
     } else if (totalWrongQuestions === 25) {
-        modalText.innerText = "Congrats! You're an Idiot! You've answered 25 questions incorrectly."
+        modalText.innerHTML = `Congrats! You're an Idiot! You've answered 25 questions incorrectly.<br><img src="./styles/red25.png"width='300px'>`
         modalBtn.click();
+        document.querySelector('#red25').hidden = false
     }
 }
 
@@ -514,31 +528,46 @@ const countConsecutiveRight = (isRight) => {
     }
 
     if (consecutiveRight === 5) {
-        modalText.innerText = "Congrats, You've correctly answered 5 consecutive questions!"
+        modalText.innerHTML = `Congrats, You've correctly answered 5 consecutive questions!<br><img src="./styles/yellow5.png"width='300px'>`
         modalBtn.click();
+        document.querySelector('#yellow5').hidden = false
     } else if (consecutiveRight === 10) {
-        modalText.innerText = "Congrats, You've correctly answered 10 consecutive questions!"
+        modalText.innerHTML = `Congrats, You've correctly answered 10 consecutive questions!<br><img src="./styles/yellow10.png"width='300px'>`
         modalBtn.click();
+        document.querySelector('#yellow10').hidden = false
     } else if (consecutiveRight === 25) {
-        modalText.innerText = "Congrats, You've correctly answered 25 consecutive questions!"
+        modalText.innerHTML = `Congrats, You've correctly answered 25 consecutive questions!<br><img src="./styles/yellow25.png"width='300px'>`
         modalBtn.click();
+        document.querySelector('#yellow25').hidden = false
     }
 }
 
 const countCreatedQuestions = () => {
     const totalCreatedQuestions = createdQuestionsArray.length
     if (totalCreatedQuestions === 1) {
-        modalText.innerText = "Wow, You've contributed your 1st question! Thanks!"
+        modalText.innerHTML = `Wow, You've contributed your 1st question! Thanks!<br><img src="./styles/blue1.png"width='300px'>`
         modalBtn.click();
+        document.querySelector('#blue1').hidden = false
     } else if (totalCreatedQuestions === 10) {
-        modalText.innerText = "Wow, You've contributed your 10th question! Thanks!"
+        modalText.innerHTML = `Wow, You've contributed your 10th question! Thanks!<br><img src="./styles/blue10.png"width='300px'>`
         modalBtn.click();
+        document.querySelector('#blue10').hidden = false
     }
 }
 
 // open the modal 
 modalBtn.addEventListener('click', function(e){
+    if(shown === 0){
     modal.style.display = "block";
+    item1.style.filter = 'blur(8px)';
+    item2.style.filter = 'blur(8px)';
+    item3.style.filter = 'blur(8px)';
+    item4.style.filter = 'blur(8px)';
+    item5.style.filter = 'blur(8px)';
+    shown = 1
+    } else {
+        setTimeout(function(){ modalBtn.click(); }, 2000);
+    }
 })
 
 // When the user clicks on (x), close the modal
@@ -547,8 +576,25 @@ modalBtn.addEventListener('click', function(e){
 // }
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
+window.addEventListener('click', function(e){
+    if(e.target.matches('p#modal-text')){
     modal.style.display = "none";
-  }
+    modal.style.dispaly = "block";
+    item1.style.filter = 'blur(0px)';
+    item2.style.filter = 'blur(0px)';
+    item3.style.filter = 'blur(0px)';
+    item4.style.filter = 'blur(0px)';
+    item5.style.filter = 'blur(0px)';
+    shown = 0
+    }
+
+})
+
+function elementaryColorBoard(){
+    item1.style.background = '#ff7e7e';
+    item2.style.background =  'rgb(40 163 191)';
+    item3.style.background =  'rgb(234 145 66)';
+    item4.style.background = 'rgb(247 220 113)';
+    item5.style.background = 'rgb(91,170,81)';
 }
+

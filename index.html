@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style="background: black">
     <head>
         <link
     rel="stylesheet"
@@ -23,18 +23,18 @@
           </form>
         <div class = 'logged-in'>
             <header class="toolbar">
-                <img class="awards" src="./styles/orange10.png" width="30px">
-                <img class="awards" src="./styles/orange30.png" width="30px">
-                <img class="awards" src="./styles/green1.png" width="30px">
-                <img class="awards" src="./styles/green5.png" width="30px">
-                <img class="awards" src="./styles/green25.png" width="30px">
-                <img class="awards" src="./styles/yellow5.png" width="30px">
-                <img class="awards" src="./styles/yellow10.png" width="30px">
-                <img class="awards" src="./styles/yellow25.png" width="30px">
-                <img class="awards" src="./styles/blue1.png" width="30px">
-                <img class="awards" src="./styles/blue10.png" width="30px">
-                <img class="awards" src="./styles/red1.png" width="30px">
-                <img class="awards" src="./styles/red25.png" width="30px">
+                <img class="awards" hidden=true id="orange10"src="./styles/orange10.png" width="30px">
+                <img class="awards" hidden=true id="orange30"src="./styles/orange30.png" width="30px">
+                <img class="awards" hidden=true id="green1"src="./styles/green1.png" width="30px">
+                <img class="awards" hidden=true id="green5"src="./styles/green5.png" width="30px">
+                <img class="awards" hidden=true id="green25"src="./styles/green25.png" width="30px">
+                <img class="awards" hidden=true id="yellow5"src="./styles/yellow5.png" width="30px">
+                <img class="awards" hidden=true id="yellow10"src="./styles/yellow10.png" width="30px">
+                <img class="awards" hidden=true id="yellow25"src="./styles/yellow25.png" width="30px">
+                <img class="awards" hidden=true id="blue1"src="./styles/blue1.png" width="30px">
+                <img class="awards" hidden=true id="blue10"src="./styles/blue10.png" width="30px">
+                <img class="awards" hidden=true id="red1"src="./styles/red1.png" width="30px">
+                <img class="awards" hidden=true id="red25"src="./styles/red25.png" width="30px">
             </header>
             <div class="grid-container">
                 <div class="item1">
@@ -108,14 +108,14 @@
                             <span id="num-questions"><br>0</span>
                         </p>
                     </ul>
-                    <button id="myBtn">Open Modal</button>
+                </div>
+                <button id="myBtn" hidden=true>Open Modal</button>
                     <div id="myModal" class="modal">
                         <div class="modal-content">
                           <!-- <span class="close">&times;</span> -->
                           <p id="modal-text">Some text in the Modal..</p>
                         </div>
                       </div>
-                </div>
             </div>
             <script src="src/index.js" async defer></script>
         </div>
