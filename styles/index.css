@@ -189,7 +189,7 @@
       margin-left: -140px;
     }
 
-    /* MODAL SHIT */
+
     .modal {
       display: none; /* Hidden by default */
       position: fixed; /* Stay in place */
@@ -204,7 +204,6 @@
       background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
     }
     
-    /* Modal Content */
     .modal-content {
       background-color:#ffffff00;
       margin: auto;
@@ -219,22 +218,6 @@
       
     }
 
-    
-    /* The Close Button */
-    /* .close {
-      color: #aaaaaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    } */
-    
-    /* .close:hover,
-    .close:focus {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
-    } */
-    /* MODAL SHIT */
     .awards {
       margin-top: 5px;
       float: right;
@@ -243,4 +226,11 @@
 
     select {
       outline:none;
+    }
+
+    #toolbar-gwiz {
+      z-index: 4;
+      position: relative;
+      margin-top: -67px;
+      margin-left: 58px;
     }

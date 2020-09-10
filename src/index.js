@@ -27,7 +27,6 @@ const createdQuestions = document.querySelector('#created_questions');
 const numQuestions = document.querySelector('#num-questions');
 const editBtn = document.querySelector('#edit-btn');
 const delBtn = document.querySelector('#del-btn');
-// MODAL SHIT //
 const modal = document.getElementById("myModal");
 const modalBtn = document.getElementById("myBtn");
 let modalText = document.querySelector('#modal-text')
@@ -35,15 +34,12 @@ const item1 = document.querySelector('.item1')
 const item2 = document.querySelector('.item2')
 const item4 = document.querySelector('.item4')
 const item5 = document.querySelector('.item5')
-// const span = document.getElementsByClassName("close")[0];
-// MODAL SHIT //
 let consecutiveRight = 0
 let filteredQ = []
 let rightAns = []
 let wrongAns = []
 let createdQuestionsArray = []
 let shown = 0
-// let thisUser = 0
 
 
 //when card is clicked, a new question is pulled
@@ -293,6 +289,14 @@ questionForm.addEventListener('submit', function(e){
         corr_answer = 1
     }
 
+    if (diffDrop.value === "Select A Difficulty"){
+        diffDrop.value = 1
+    }
+
+    if (levelDrop.value === "Select A Level"){
+        levelDrop.value = "ES"
+    }
+
     relatedWordsArr.push(rw1.value, rw2.value, rw3.value)
 
     //create config options for API call to create a new obj
@@ -393,6 +397,14 @@ document.addEventListener('click', function(e){
         if (op1Btn.checked) {
             corr_answer = 1
         }
+
+        if (diffDrop.value === "Select A Difficulty"){
+            diffDrop.value = 1
+        }
+    
+        if (levelDrop.value === "Select A Level"){
+            levelDrop.value = "ES"
+        }    
     
         relatedWordsArr.push(rw1.value, rw2.value, rw3.value)
     
@@ -570,11 +582,6 @@ modalBtn.addEventListener('click', function(e){
    
 })
 
-// When the user clicks on (x), close the modal
-// span.onclick = function() {
-//   modal.style.display = "none";
-// }
-
 // When the user clicks anywhere outside of the modal, close it
 window.addEventListener('click', function(e){
     if(e.target.matches('p#modal-text')){
@@ -639,3 +646,11 @@ function updateBackgroundTheme(level){
 
     }
 }
+
+
+// function validate() {
+//     if (questionForm.related_words.value == "" ){
+//         alert( "Please provide a related word!" );
+//         return false;
+//     }
+// }
