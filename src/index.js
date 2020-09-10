@@ -47,17 +47,15 @@ const eSTheme = ["#FF595E", "#FFCA3A", "#8AC926", "#1982C4", "#6A4C93" ]
 const mSTheme = ["#FFBE0B", "#FB5607", "#FF006E", "#8338EC", "#3A86FF"]
 const hSTheme = ["#1A535C", "#4ECDC4", "#F7FFF7", "#FF6B6B", "#FFE66D"]
 const satTheme = ["#e63946", "#a8dadc", "#457b9d", "#1d3557", "#f1faee"]
+let twoAwards = false
 // let thisUser = 0
 
 
 //when card is clicked, a new question is pulled
 nextBtn.addEventListener('click', function(e){
-    card_text.classList.add('animate__animated', 'animate__flip');
+    resetCard();
     pickAQuestion(filteredQ)
-    option1.style.background = 'white'
-    option2.style.background = 'white'
-    option1.disabled = false;
-    option2.disabled = false;
+  
 });
 
 
@@ -198,10 +196,17 @@ function getLevels(){
   })
 }
 
+function resetCard(){
+    card_text.classList.add('animate__animated', 'animate__flip');
+    option1.disabled = false;
+    option2.disabled = false;
+    option1.style.background = 'white'
+    option2.style.background = 'white'
+}
 // when user selects an option from level, sends option value and 1 (for difficulty) to getAllQuestions()
 //also sends the option value to getDifficulty() to grab a list of all the difficulty numbers
 levelBar.addEventListener('change', function(e){
-    card.click();
+    resetCard();
     getAllQuestions(e.target.value, 1)
     getDifficulty(e.target.value)
     updateTheme(e.target.value)
@@ -487,10 +492,12 @@ const countQuestionsAnswered = () => {
     if (totalQuestionsAnswered === 10) {
         modalText.innerHTML = `Congrats, You've answered 10 questions!<br><img src="./styles/orange10.png"width='300px'>`
         giveAward('#orange10')
+        twoAwards = true
 
     } else if (totalQuestionsAnswered === 30) {
         modalText.innerHTML = `Congrats, You've answered 30 questions!<br><img src="./styles/orange30.png"width='300px'>`
         giveAward('#orange30')
+        twoAwards = true
     }
     
 }
@@ -501,30 +508,42 @@ function giveAward(elementId){
     modalText.classList.add('animate__animated', 'animate__jackInTheBox')
     document.querySelector(elementId).classList.add('animate__animated', 'animate__bounceInLeft')
     document.querySelector('.toolbar').classList.add('animate__animated', 'animate__heartBeat', 'animate__repeat-3')
+    twoAwards = false
 }
 
 const countCorrectQuestions = () => {
     const totalRightAnswers = rightAns.length
+    if(twoAwards){
+        setTimeout(function(){}, 2000);
+    }
     if (totalRightAnswers === 1) {
         modalText.innerHTML = `Congrats, you've answered 1 question correctly!<br><img src="./styles/green1.png"width='300px'>`
         giveAward('#green1')
+        twoAwards = true
     } else if (totalRightAnswers === 5) {
-        modalText.innerHTML = `Congrats, you've answered 5 question correctly!<br><img src="./styles/green5.png"width='300px'>`
-        giveAward('#green5')
+        setTimeout(function(){modalText.innerHTML = `Congrats, you've answered 5 question correctly!<br><img src="./styles/green5.png"width='300px'>`
+        giveAward('#green5'); }, 3000);
+        twoAwards = true
     } else if (totalRightAnswers === 25) {
-        modalText.innerHTML = `Congrats, you've answered 25 question correctly!<br><img src="./styles/green25.png"width='300px'>`
-        giveAward('#green25')
+        setTimeout(function(){modalText.innerHTML = `Congrats, you've answered 25 question correctly!<br><img src="./styles/green25.png"width='300px'>`
+        giveAward('#green25'); }, 3000);
+        twoAwards = true
     }
 }
 
 const countWrongQuestions = () => {
     const totalWrongQuestions = wrongAns.length
+    if(twoAwards){
+        setTimeout(function(){}, 2000);
+    }
     if (totalWrongQuestions === 1) {
         modalText.innerHTML = `Congrats! You're an Idiot! You've answered 1 question incorrectly.<br><img src="./styles/red1.png"width='300px'>`
         giveAward('#red1')
+        twoAwards = true
     } else if (totalWrongQuestions === 25) {
         modalText.innerHTML = `Congrats! You're an Idiot! You've answered 25 questions incorrectly.<br><img src="./styles/red25.png"width='300px'>`
         giveAward('#red25')
+        twoAwards = true
     }
 }
 
@@ -534,27 +553,38 @@ const countConsecutiveRight = (isRight) => {
     } else {
         consecutiveRight = 0
     }
+    if(twoAwards){
+        setTimeout(function(){}, 2000);
+    }
 
-    if (consecutiveRight === 5 && document.querySelector('#yellow5').hidden === false) {
+    if (consecutiveRight === 5 && document.querySelector('#yellow5').hidden === true) {
         modalText.innerHTML = `Congrats, You've correctly answered 5 consecutive questions!<br><img src="./styles/yellow5.png"width='300px'>`
         giveAward('#yellow5')
-    } else if (consecutiveRight === 10 && document.querySelector('#yellow10').hidden === false) {
+        twoAwards = true
+    } else if (consecutiveRight === 10 && document.querySelector('#yellow10').hidden === true) {
         modalText.innerHTML = `Congrats, You've correctly answered 10 consecutive questions!<br><img src="./styles/yellow10.png"width='300px'>`
         giveAward('#yellow10')
-    } else if (consecutiveRight === 25 && document.querySelector('#yellow25').hidden === false) {
+        twoAwards = true
+    } else if (consecutiveRight === 25 && document.querySelector('#yellow25').hidden === true) {
         modalText.innerHTML = `Congrats, You've correctly answered 25 consecutive questions!<br><img src="./styles/yellow25.png"width='300px'>`
         giveAward('#yellow25')
+        twoAwards = true
     }
 }
 
 const countCreatedQuestions = () => {
     const totalCreatedQuestions = createdQuestionsArray.length
+    if(twoAwards){
+        setTimeout(function(){}, 2000);
+    }
     if (totalCreatedQuestions === 1) {
         modalText.innerHTML = `Wow, You've contributed your 1st question! Thanks!<br><img src="./styles/blue1.png"width='300px'>`
         giveAward('#blue1')
+        twoAwards = true
     } else if (totalCreatedQuestions === 10) {
         modalText.innerHTML = `Wow, You've contributed your 10th question! Thanks!<br><img src="./styles/blue10.png"width='300px'>`
         giveAward('#blue10')
+        twoAwards = true
     }
 }
 

@@ -7,6 +7,7 @@
     color: #2d2e2f;
     border-radius: 15px;
     margin-top: -35px;
+    box-shadow: inset -3px 3px 20px 2px #020625d1;
   }
 
     .grid-container {
