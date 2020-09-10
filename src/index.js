@@ -123,14 +123,15 @@ function getAllQuestions(level, diff){
 
   //display question on flashcard
   function displayQuestion(question){
-    text.innerHTML = `<ul style="margin-left: -125px"><li>${question.related_words[0]}</li>
-    <li>${question.related_words[1]}</li>
-    <li>${question.related_words[2]}</li>
+    text.innerHTML = `<ul style="margin-left: -125px">
+    <li>${question.related_words[0].charAt(0).toUpperCase() + question.related_words[0].slice(1).toLowerCase()}</li>
+    <li>${question.related_words[1].charAt(0).toUpperCase() + question.related_words[1].slice(1).toLowerCase()}</li>
+    <li>${question.related_words[2].charAt(0).toUpperCase() + question.related_words[2].slice(1).toLowerCase()}</li>
     </ul>`
-    option1.innerText = question.option_1
+    option1.innerText = question.option_1.charAt(0).toUpperCase() + question.option_1.slice(1).toLowerCase()
     option1.dataset.correct = question.correct_answer
     option1.dataset.qId = question.id
-    option2.innerText = question.option_2
+    option2.innerText = question.option_2.charAt(0).toUpperCase() + question.option_2.slice(1).toLowerCase()
     option2.dataset.correct = question.correct_answer
     option2.dataset.qId = question.id
   }

@@ -255,7 +255,8 @@
 
     #toolbar-gwiz {
       z-index: 4;
-      position: relative;
-      margin-top: -67px;
-      margin-left: 58px;
+    position: absolute;
+    margin-top: -67px;
+    margin-left: 83px;
+    font-size: 40px;
     }
