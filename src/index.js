@@ -200,6 +200,7 @@ levelBar.addEventListener('change', function(e){
     card.click();
     getAllQuestions(e.target.value, 1)
     getDifficulty(e.target.value)
+    updateBackgroundTheme(e.target.value)
 })
 
 //when user clicks on difficulty bar the value from both dropsdowns are sent to getAllQuestions()
@@ -253,7 +254,6 @@ function populateLevelBar(levels){
         option.value = level
         if(level == 'ES'){
             name = 'Elementary School'
-            elementaryColorBoard();
         } else if(level == 'MS'){
             name = 'Middle School'
         } else if (level == 'HS'){
@@ -593,10 +593,51 @@ window.addEventListener('click', function(e){
 })
 
 function elementaryColorBoard(){
-    item1.style.background = '#ff7e7e';
-    item2.style.background =  'rgb(40 163 191)';
-    item3.style.background =  'rgb(234 145 66)';
-    item4.style.background = 'rgb(247 220 113)';
-    item5.style.background = 'rgb(91,170,81)';
+    item1.style.background = "#FF595E"
+    item2.style.background = "#FFCA3A" 
+    item3.style.background = "#8AC926" 
+    item4.style.background = "#1982C4"
+    item5.style.background = "#6A4C93"
 }
 
+function middleColorBoard(){
+    item1.style.background = "#FFBE0B"
+    item2.style.background = "#FB5607" 
+    item3.style.background = "#FF006E" 
+    item4.style.background = "#8338EC"
+    item5.style.background = "#3A86FF"
+}
+
+function highColorBoard(){
+    item1.style.background = "#1A535C"
+    item2.style.background = "#4ECDC4"
+    item3.style.background = "#F7FFF7"
+    item4.style.background = "#FF6B6B"
+    item5.style.background = "#FFE66D"
+}
+
+function satColorBoard(){
+    item1.style.background = "#e63946"
+    item2.style.background = "#a8dadc"
+    item3.style.background = "#457b9d"
+    item4.style.background = "#1d3557"
+    item5.style.background = "#f1faee"
+}
+
+
+function updateBackgroundTheme(level){
+    switch(level){
+        case "ES":
+            elementaryColorBoard();
+            break;
+        case "MS":
+            middleColorBoard();
+            break;
+        case "HS":
+            highColorBoard();
+            break;
+        default:
+            satColorBoard();
+
+    }
+}
