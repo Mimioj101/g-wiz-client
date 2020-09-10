@@ -559,17 +559,15 @@ const countCreatedQuestions = () => {
 
 // open the modal 
 modalBtn.addEventListener('click', function(e){
-    if(shown === 0){
+   
     modal.style.display = "block";
     item1.style.filter = 'blur(8px)';
     item2.style.filter = 'blur(8px)';
     item3.style.filter = 'blur(8px)';
     item4.style.filter = 'blur(8px)';
     item5.style.filter = 'blur(8px)';
-    shown = 1
-    } else {
-        setTimeout(function(){ modalBtn.click(); }, 2000);
-    }
+    
+   
 })
 
 // When the user clicks on (x), close the modal
@@ -587,7 +585,7 @@ window.addEventListener('click', function(e){
     item3.style.filter = 'blur(0px)';
     item4.style.filter = 'blur(0px)';
     item5.style.filter = 'blur(0px)';
-    shown = 0
+    
     }
 
 })

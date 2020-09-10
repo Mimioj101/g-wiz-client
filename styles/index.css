@@ -69,7 +69,7 @@
     .card {
       min-width: 75%;
       min-height: 75%;
-      padding-right: 50px
+      box-shadow: 17px -15px 8px 0px #00000085;
     }
 
     h6 ul li{
@@ -119,7 +119,7 @@
       border-radius: 15px;
       /* margin-top: 50px; */
       /* margin-top: -150px; */
-      box-shadow: -5px -5px 4px 0px #00000047;
+      box-shadow: 11px -9px 3px 0px #00000066;
       outline:none;
       background: white;
     }
