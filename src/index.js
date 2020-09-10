@@ -43,6 +43,10 @@ let rightAns = []
 let wrongAns = []
 let createdQuestionsArray = []
 let shown = 0
+const eSTheme = ["#FF595E", "#FFCA3A", "#8AC926", "#1982C4", "#6A4C93" ]
+const mSTheme = ["#FFBE0B", "#FB5607", "#FF006E", "#8338EC", "#3A86FF"]
+const hSTheme = ["#1A535C", "#4ECDC4", "#F7FFF7", "#FF6B6B", "#FFE66D"]
+const satTheme = ["#e63946", "#a8dadc", "#457b9d", "#1d3557", "#f1faee"]
 // let thisUser = 0
 
 
@@ -64,7 +68,7 @@ card_text.addEventListener('click', function(e){
     option2.disabled = true;   
         if(e.target.dataset.btn === e.target.dataset.correct){
             rightAns.push(option1.dataset.qId)
-            option1.style.background = '#57886C'
+            option1.style.background = 'rgb(33 214 23)';
             numRight.innerHTML = `<br>${rightAns.length}`
             countCorrectQuestions();
             countConsecutiveRight(true);
@@ -81,7 +85,7 @@ card_text.addEventListener('click', function(e){
     option2.disabled = true;
         if(e.target.dataset.btn === e.target.dataset.correct){
             rightAns.push(option2.dataset.qId)
-            option2.style.background = '#57886C'
+            option2.style.background = 'rgb(33 214 23)';
             numRight.innerHTML = `<br>${rightAns.length}`
             countCorrectQuestions();
             countConsecutiveRight(true);
@@ -168,7 +172,7 @@ const storeUser = (myUser) => {
 
 //load game 
 function start(){
-    elementaryColorBoard();
+    setTheme(eSTheme);
     getAllQuestions('ES', 1);
     card_text.classList.add('animate__animated', 'animate__bounceInLeft');
     getDifficulty('ES');
@@ -200,7 +204,7 @@ levelBar.addEventListener('change', function(e){
     card.click();
     getAllQuestions(e.target.value, 1)
     getDifficulty(e.target.value)
-    updateBackgroundTheme(e.target.value)
+    updateTheme(e.target.value)
 })
 
 //when user clicks on difficulty bar the value from both dropsdowns are sent to getAllQuestions()
@@ -482,30 +486,34 @@ const countQuestionsAnswered = () => {
     const totalQuestionsAnswered = rightAns.length + wrongAns.length
     if (totalQuestionsAnswered === 10) {
         modalText.innerHTML = `Congrats, You've answered 10 questions!<br><img src="./styles/orange10.png"width='300px'>`
-        modalBtn.click();
-        document.querySelector('#orange10').hidden = false
+        giveAward('#orange10')
+
     } else if (totalQuestionsAnswered === 30) {
         modalText.innerHTML = `Congrats, You've answered 30 questions!<br><img src="./styles/orange30.png"width='300px'>`
-        modalBtn.click();
-        document.querySelector('#orange30').hidden = false
+        giveAward('#orange30')
     }
     
+}
+
+function giveAward(elementId){
+    modalBtn.click();
+    document.querySelector(elementId).hidden = false
+    modalText.classList.add('animate__animated', 'animate__jackInTheBox')
+    document.querySelector(elementId).classList.add('animate__animated', 'animate__bounceInLeft')
+    document.querySelector('.toolbar').classList.add('animate__animated', 'animate__heartBeat', 'animate__repeat-3')
 }
 
 const countCorrectQuestions = () => {
     const totalRightAnswers = rightAns.length
     if (totalRightAnswers === 1) {
         modalText.innerHTML = `Congrats, you've answered 1 question correctly!<br><img src="./styles/green1.png"width='300px'>`
-        modalBtn.click();
-        document.querySelector('#green1').hidden = false
+        giveAward('#green1')
     } else if (totalRightAnswers === 5) {
         modalText.innerHTML = `Congrats, you've answered 5 question correctly!<br><img src="./styles/green5.png"width='300px'>`
-        modalBtn.click();
-        document.querySelector('#green5').hidden = false
+        giveAward('#green5')
     } else if (totalRightAnswers === 25) {
         modalText.innerHTML = `Congrats, you've answered 25 question correctly!<br><img src="./styles/green25.png"width='300px'>`
-        modalBtn.click();
-        document.querySelector('#green25').hidden = false
+        giveAward('#green25')
     }
 }
 
@@ -513,12 +521,10 @@ const countWrongQuestions = () => {
     const totalWrongQuestions = wrongAns.length
     if (totalWrongQuestions === 1) {
         modalText.innerHTML = `Congrats! You're an Idiot! You've answered 1 question incorrectly.<br><img src="./styles/red1.png"width='300px'>`
-        modalBtn.click();
-        document.querySelector('#red1').hidden = false
+        giveAward('#red1')
     } else if (totalWrongQuestions === 25) {
         modalText.innerHTML = `Congrats! You're an Idiot! You've answered 25 questions incorrectly.<br><img src="./styles/red25.png"width='300px'>`
-        modalBtn.click();
-        document.querySelector('#red25').hidden = false
+        giveAward('#red25')
     }
 }
 
@@ -529,18 +535,15 @@ const countConsecutiveRight = (isRight) => {
         consecutiveRight = 0
     }
 
-    if (consecutiveRight === 5) {
+    if (consecutiveRight === 5 && document.querySelector('#yellow5').hidden === false) {
         modalText.innerHTML = `Congrats, You've correctly answered 5 consecutive questions!<br><img src="./styles/yellow5.png"width='300px'>`
-        modalBtn.click();
-        document.querySelector('#yellow5').hidden = false
-    } else if (consecutiveRight === 10) {
+        giveAward('#yellow5')
+    } else if (consecutiveRight === 10 && document.querySelector('#yellow10').hidden === false) {
         modalText.innerHTML = `Congrats, You've correctly answered 10 consecutive questions!<br><img src="./styles/yellow10.png"width='300px'>`
-        modalBtn.click();
-        document.querySelector('#yellow10').hidden = false
-    } else if (consecutiveRight === 25) {
+        giveAward('#yellow10')
+    } else if (consecutiveRight === 25 && document.querySelector('#yellow25').hidden === false) {
         modalText.innerHTML = `Congrats, You've correctly answered 25 consecutive questions!<br><img src="./styles/yellow25.png"width='300px'>`
-        modalBtn.click();
-        document.querySelector('#yellow25').hidden = false
+        giveAward('#yellow25')
     }
 }
 
@@ -548,12 +551,10 @@ const countCreatedQuestions = () => {
     const totalCreatedQuestions = createdQuestionsArray.length
     if (totalCreatedQuestions === 1) {
         modalText.innerHTML = `Wow, You've contributed your 1st question! Thanks!<br><img src="./styles/blue1.png"width='300px'>`
-        modalBtn.click();
-        document.querySelector('#blue1').hidden = false
+        giveAward('#blue1')
     } else if (totalCreatedQuestions === 10) {
         modalText.innerHTML = `Wow, You've contributed your 10th question! Thanks!<br><img src="./styles/blue10.png"width='300px'>`
-        modalBtn.click();
-        document.querySelector('#blue10').hidden = false
+        giveAward('#blue10')
     }
 }
 
@@ -578,6 +579,7 @@ modalBtn.addEventListener('click', function(e){
 // When the user clicks anywhere outside of the modal, close it
 window.addEventListener('click', function(e){
     if(e.target.matches('p#modal-text')){
+    document.querySelector('.toolbar').classList.remove('animate__animated', 'animate__heartBeat', 'animate__repeat-3')
     modal.style.display = "none";
     modal.style.dispaly = "block";
     item1.style.filter = 'blur(0px)';
@@ -590,52 +592,30 @@ window.addEventListener('click', function(e){
 
 })
 
-function elementaryColorBoard(){
-    item1.style.background = "#FF595E"
-    item2.style.background = "#FFCA3A" 
-    item3.style.background = "#8AC926" 
-    item4.style.background = "#1982C4"
-    item5.style.background = "#6A4C93"
-}
 
-function middleColorBoard(){
-    item1.style.background = "#FFBE0B"
-    item2.style.background = "#FB5607" 
-    item3.style.background = "#FF006E" 
-    item4.style.background = "#8338EC"
-    item5.style.background = "#3A86FF"
-}
-
-function highColorBoard(){
-    item1.style.background = "#1A535C"
-    item2.style.background = "#4ECDC4"
-    item3.style.background = "#F7FFF7"
-    item4.style.background = "#FF6B6B"
-    item5.style.background = "#FFE66D"
-}
-
-function satColorBoard(){
-    item1.style.background = "#e63946"
-    item2.style.background = "#a8dadc"
-    item3.style.background = "#457b9d"
-    item4.style.background = "#1d3557"
-    item5.style.background = "#f1faee"
+function setTheme(theme){
+    item1.style.background = theme[0]
+    item2.style.background = theme[1]
+    item3.style.background = theme[2]
+    item4.style.background = theme[3]
+    item5.style.background = theme[4]
 }
 
 
-function updateBackgroundTheme(level){
+function updateTheme(level){
+    let theme = eSTheme
     switch(level){
         case "ES":
-            elementaryColorBoard();
+            theme = eSTheme
             break;
         case "MS":
-            middleColorBoard();
+            theme = mSTheme
             break;
         case "HS":
-            highColorBoard();
+            theme = hSTheme
             break;
         default:
-            satColorBoard();
-
+            theme = satTheme
     }
+    setTheme(theme)
 }
