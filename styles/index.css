@@ -119,8 +119,9 @@
       border-radius: 15px;
       /* margin-top: 50px; */
       /* margin-top: -150px; */
-      box-shadow: -5px -5px #457f864f;
+      box-shadow: -5px -5px 4px 0px #00000047;
       outline:none;
+      background: white;
     }
 
     button#next_question {
@@ -204,7 +205,15 @@
       margin: auto;
       padding: 20px;
       width: 80%;
+      font-weight: 800px;
+      color: black;
+
+      font-size: 33px;
+      text-shadow: -6px -2px 16px black;
+      -webkit-text-stroke: 1px #000000;
+      
     }
+
     
     /* The Close Button */
     /* .close {
@@ -225,4 +234,8 @@
       margin-top: 5px;
       float: right;
       margin-right: 10px;
+    }
+
+    select {
+      outline:none;
     }

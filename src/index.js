@@ -353,7 +353,8 @@ function displayUserQuestion(question, uQ){
     li.innerHTML = 
     ` ${stringWord}<br>
         <button id="edit-btn" data-uq-id="${uQ}" data-q-id="${question.id}">Edit</button>
-        <button style="background: red" id="del-btn" data-uq-id="${uQ}" data-q-id="${question.id}">X</button>`
+        <button style="background: red" id="del-btn" data-uq-id="${uQ}" data-q-id="${question.id}">X</button>
+        <br>------------------------------`
 }
 
 //changes the innerText of Created Questions under Stats
@@ -400,7 +401,8 @@ document.addEventListener('click', function(e){
         li.innerHTML = 
         ` ${relatedWordsArr.join(', ')}<br>
         <button id="edit-btn" data-uq-id="${document.querySelector('#btn-edit').dataset.record}" data-q-id="${document.querySelector('#btn-edit').dataset.update}">Edit</button>
-        <button style="background: red" id="del-btn" data-uq-id="${document.querySelector('#btn-edit').dataset.update}" data-q-id="${document.querySelector('#btn-edit').dataset.record}">X</button>`
+        <button style="background: red" id="del-btn" data-uq-id="${document.querySelector('#btn-edit').dataset.update}" data-q-id="${document.querySelector('#btn-edit').dataset.record}">X</button>
+        <br>------------------------------`
 
         const options = {
             method: "PATCH",
