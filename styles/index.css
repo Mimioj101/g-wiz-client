@@ -191,7 +191,7 @@
       margin-left: -140px;
     }
 
-    /* MODAL SHIT */
+
     .modal {
       display: none; /* Hidden by default */
       position: fixed; /* Stay in place */
@@ -206,7 +206,6 @@
       background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
     }
     
-    /* Modal Content */
     .modal-content {
       background-color:#ffffff00;
       margin: auto;
@@ -252,4 +251,11 @@
 
     select {
       outline:none;
+    }
+
+    #toolbar-gwiz {
+      z-index: 4;
+      position: relative;
+      margin-top: -67px;
+      margin-left: 58px;
     }

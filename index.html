@@ -15,14 +15,16 @@
         <link rel="stylesheet" href="styles/index.css">
     </head>
     <body class = 'login'>
-        <img class="logo animate__animated animate__tada animate__slower animate__repeat-3" src="./styles/G-Wiz.png" width="800px" height="800px"/>
-        <h5>G.Wiz</h5>
+            <img class="logo animate__animated animate__tada animate__slower animate__repeat-3" src="./styles/G-Wiz.png" width="800px" height="800px"/>
+            <h5>G.Wiz</h5>
         <form class="name-form">
             <input type="text" id="username" name="username" placeholder="Your Name">
             <input type="submit" value="Let Me In!">
           </form>
         <div class = 'logged-in'>
             <header class="toolbar">
+                <img id="toolbar-logo" src="./styles/G-Wiz.png" width="75px">
+                <h1 id="toolbar-gwiz">G.Wiz</h1>
                 <img class="awards" hidden=true id="orange10"src="./styles/orange10.png" width="30px">
                 <img class="awards" hidden=true id="orange30"src="./styles/orange30.png" width="30px">
                 <img class="awards" hidden=true id="green1"src="./styles/green1.png" width="30px">
@@ -60,15 +62,15 @@
                 </div>  
                 <div class="item4">
                     <form id="question-form">
-                        <input type="text" id="rw1" name="rw1" placeholder="related word 1">
-                        <input type="text" id="rw2" name="rw2" placeholder="related word 2">
-                        <input type="text" id="rw3" name="rw3" placeholder="related word 3"><br>
-                        <input type="text" id="op1" name="op1" placeholder="option 1">
-                        <input type="text" id="op2" name="op2" placeholder="option 2"><br>
+                        <input type="text" id="rw1" name="rw1" placeholder="related word 1" required>
+                        <input type="text" id="rw2" name="rw2" placeholder="related word 2" required>
+                        <input type="text" id="rw3" name="rw3" placeholder="related word 3" required><br>
+                        <input type="text" id="op1" name="op1" placeholder="option 1" required>
+                        <input type="text" id="op2" name="op2" placeholder="option 2" required><br>
                         <p>Please select the correct answer:</p>
-                        <input type="radio" id="op1Btn" name="correct-answer" value="1">
+                        <input type="radio" required id="op1Btn" name="correct-answer" value="1">
                         <label for="op1" id="ans-opt-1">Option 1</label><br>
-                        <input type="radio" id="op2Btn" name="correct-answer" value="2">
+                        <input type="radio" required id="op2Btn" name="correct-answer" value="2">
                         <label for="op2" id="ans-opt-2">Option 2</label><br>
                         <select name="level" id="level-drpdwn">
                             <option disabled hidden selected>Select A Level</option>
@@ -77,7 +79,7 @@
                           <option value="HS">High School</option>
                           <option value="SAT">SAT</option>
                         </select>
-                        <select name="difficulty" id="difficulty-drpdwn">
+                        <select name="difficulty" id="difficulty-drpdwn" required>
                             <option disabled hidden selected>Select A Difficulty</option>
                           <option value="1">1</option>
                           <option value="2">2</option>
