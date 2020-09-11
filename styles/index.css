@@ -294,16 +294,16 @@
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: #56565663; /* Black w/ opacity */
     z-index: 4;
   }
   
   /* Modal Content/Box */
   .tool-modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    background-color: #fefefe00;
+    margin: 0px 10% 0px 10%; /* 15% from the top and centered */
     padding: 20px;
-    border: 1px solid #888;
+    /* border: 1px solid #888; */
     width: 80%; /* Could be more or less, depending on screen size */
   }
   
@@ -311,7 +311,7 @@
   .close {
     color: #aaa;
     float: right;
-    font-size: 28px;
+    font-size: 48px;
     font-weight: bold;
   }
   
@@ -320,4 +320,9 @@
     color: black;
     text-decoration: none;
     cursor: pointer;
+  }
+
+  .benchmark {
+    -webkit-filter: drop-shadow(5px 5px 5px #222);
+    filter: drop-shadow(12px -4px 5px #222);
   }

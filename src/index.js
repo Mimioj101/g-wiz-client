@@ -608,14 +608,18 @@ const countCreatedQuestions = () => {
 modalBtn.addEventListener('click', function(e){
    
     modal.style.display = "block";
+   blur();
+    
+   
+})
+
+function blur(){
     item1.style.filter = 'blur(8px)';
     item2.style.filter = 'blur(8px)';
     item3.style.filter = 'blur(8px)';
     item4.style.filter = 'blur(8px)';
     item5.style.filter = 'blur(8px)';
-    
-   
-})
+}
 
 // When the user clicks anywhere outside of the modal, close it
 window.addEventListener('click', function(e){
@@ -623,15 +627,19 @@ window.addEventListener('click', function(e){
     document.querySelector('.toolbar').classList.remove('animate__animated', 'animate__heartBeat', 'animate__repeat-3')
     modal.style.display = "none";
     modal.style.dispaly = "block";
+    unBlur();
+    
+    }
+
+})
+
+function unBlur(){
     item1.style.filter = 'blur(0px)';
     item2.style.filter = 'blur(0px)';
     item3.style.filter = 'blur(0px)';
     item4.style.filter = 'blur(0px)';
     item5.style.filter = 'blur(0px)';
-    
-    }
-
-})
+}
 
 
 function setTheme(theme){
@@ -662,9 +670,15 @@ function updateTheme(level){
 }
 
 span.onclick = function() {
-    toolModal.style.display = "none";
+    document.querySelector('#toolModal').classList.add('animate__animated', 'animate__fadeOutUpBig')
+    unBlur();
+    setTimeout(function(){document.querySelector('#toolModal').classList.remove('animate__animated', 'animate__fadeOutUpBig'); toolModal.style.display = "none" ; }, 1000);
+    //toolModal.style.display = "none";
   }
 
 toolbar.addEventListener('click', function(e){
     toolModal.style.display = "block";
+    document.querySelector('#toolModal').classList.add('animate__animated', 'animate__fadeInDownBig')
+    blur();
+    setTimeout(function(){document.querySelector('#toolModal').classList.remove('animate__animated', 'animate__fadeInDownBig') ; }, 1000);
 })
