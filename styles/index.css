@@ -81,11 +81,41 @@
       background-color: #000000;
       border-radius: 15px;
       font-family: 'Open Sans', sans-serif;
+      
     }
 
     .login {
       background-color: black;
 
+    }
+
+    #num-right, #num-wrong, #num-questions {
+      font-family: 'Changa', sans-serif;
+      color: #ffffff7a;
+      position: absolute;
+      margin-left: -171px;
+      font-size: 100px;
+      margin-top: -180px;
+      text-shadow: 7px -3px 9px black;
+      -webkit-text-stroke: 1px #0cf108;
+    }
+
+    #num-wrong { 
+      margin-left: -178px;
+      -webkit-text-stroke: 1px #d61414;  
+    }
+
+    #num-questions {
+      margin-left: -159px;
+      -webkit-text-stroke: 1px #1e10dd;
+    }
+
+    div.item5 ul {
+      margin-top: -50px;
+    }
+
+    div.item5 ul p {
+      margin-top: 120px;
     }
 
 
@@ -250,8 +280,10 @@
     }
 
     select {
-      outline:none;
-    }
+      outline: none;
+      border-radius: 10px;
+      font-size: 20px;
+  }
 
     #toolbar-gwiz {
       z-index: 4;
@@ -260,3 +292,8 @@
     margin-left: 83px;
     font-size: 40px;
     }
+
+    input {
+      border-radius: 10px;
+      font-size: 20px;
+  }

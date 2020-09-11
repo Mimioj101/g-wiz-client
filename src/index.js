@@ -212,8 +212,7 @@ levelBar.addEventListener('change', function(e){
 
 //when user clicks on difficulty bar the value from both dropsdowns are sent to getAllQuestions()
 difficultyBar.addEventListener('change', function(e){
-    console.dir(e.target)
-    card.click();
+    resetCard();
     getAllQuestions(e.target.previousElementSibling.value, e.target.value)
 })
 
@@ -363,13 +362,13 @@ function displayUserQuestion(question, uQ){
     //     question = question.id
     // }
     const stringWord = question.related_words.join(", ")
-    const li = document.createElement('li')
-    createdQuestions.prepend(li)
-    li.innerHTML = 
+    const span = document.createElement('span')
+    createdQuestions.prepend(span)
+    span.innerHTML = 
     ` ${stringWord}<br>
-        <button id="edit-btn" data-uq-id="${uQ}" data-q-id="${question.id}">Edit</button>
-        <button style="background: red" id="del-btn" data-uq-id="${uQ}" data-q-id="${question.id}">X</button>
-        <br>------------------------------`
+        <button style="font-size: 25px; border-radius: 30px;" id="edit-btn" data-uq-id="${uQ}" data-q-id="${question.id}">Edit</button>
+        <button style="background: red;border-radius: 30px;width: 40px;height: 40px;font-size: 30px;" id="del-btn" data-uq-id="${uQ}" data-q-id="${question.id}">X</button>
+        <br>`
 }
 
 //changes the innerText of Created Questions under Stats
@@ -419,13 +418,13 @@ document.addEventListener('click', function(e){
     
         relatedWordsArr.push(rw1.value, rw2.value, rw3.value)
     
-        const li = document.createElement('li')
-        createdQuestions.prepend(li)
-        li.innerHTML = 
+        const span = document.createElement('span')
+        createdQuestions.prepend(span)
+        span.innerHTML = 
         ` ${relatedWordsArr.join(', ')}<br>
-        <button id="edit-btn" data-uq-id="${document.querySelector('#btn-edit').dataset.record}" data-q-id="${document.querySelector('#btn-edit').dataset.update}">Edit</button>
-        <button style="background: red" id="del-btn" data-uq-id="${document.querySelector('#btn-edit').dataset.update}" data-q-id="${document.querySelector('#btn-edit').dataset.record}">X</button>
-        <br>------------------------------`
+        <button style="font-size: 25px; border-radius: 30px;" id="edit-btn" data-uq-id="${document.querySelector('#btn-edit').dataset.record}" data-q-id="${document.querySelector('#btn-edit').dataset.update}">Edit</button>
+        <button style="background: red;border-radius: 30px;width: 40px;height: 40px;font-size: 30px;" id="del-btn" data-uq-id="${document.querySelector('#btn-edit').dataset.update}" data-q-id="${document.querySelector('#btn-edit').dataset.record}">X</button>`
+
 
         const options = {
             method: "PATCH",

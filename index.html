@@ -7,7 +7,8 @@
   />
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-        <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=Changa:wght@700&display=swap" rel="stylesheet">    
+  <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title></title>
         <meta name="description" content="">
@@ -62,12 +63,17 @@
                 </div>  
                 <div class="item4">
                     <form id="question-form">
+                        <h2 style="margin-top: 0px">Create Your Own Question</h2>
                         <input type="text" id="rw1" name="rw1" placeholder="related word 1" required>
                         <input type="text" id="rw2" name="rw2" placeholder="related word 2" required>
                         <input type="text" id="rw3" name="rw3" placeholder="related word 3" required><br>
                         <input type="text" id="op1" name="op1" placeholder="option 1" required>
                         <input type="text" id="op2" name="op2" placeholder="option 2" required><br>
-                        <p>Please select the correct answer:</p>
+                        <p style="
+                        margin-bottom: 10px;
+                        border-bottom-width: 5px;
+                        margin-top: 10px;
+                    ">Please select the correct answer:</p>
                         <input type="radio" required id="op1Btn" name="correct-answer" value="1">
                         <label for="op1" id="ans-opt-1">Option 1</label><br>
                         <input type="radio" required id="op2Btn" name="correct-answer" value="2">
@@ -98,9 +104,10 @@
                       </form> 
                 </div>
                 <div class="item5">
-                    <h4>Your Stats:</h4>
+                    <h4 style="margin-top:0px">Your Stats:</h4>
                     <ul>
-                        <p>Answered Correctly:
+                        <p style="margin-top: 80px;"> 
+                            Answered Correctly:
                             <span id="num-right"><br>0</span>
                         </p>
                         <p>Answered Incorrectly:
