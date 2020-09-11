@@ -114,6 +114,7 @@ function getAllQuestions(level, diff){
 //all the questions from database are passed into this function. Based on arg's passed in, filtered array
 //is created and contains only questions within param
   function filterQuestions(questionsArray, level, diff){
+      console.log(thisUser)
     filteredQ = []
     filteredQ = questionsArray.filter(question => question.level === level && question.difficulty === parseInt(diff))
     pickAQuestion(filteredQ)
@@ -207,7 +208,8 @@ function start(){
     getAllQuestions('ES', 1);
     card_text.classList.add('animate__animated', 'animate__bounceInLeft');
     getDifficulty('ES');
-    getLevels();   
+    getLevels(); 
+    setTimeout(function(){ pullCreatedQuestions(); }, 1000);  
 }
 
 //calls API to get a list of all questions then sorts through array to get uniqe level values
@@ -356,13 +358,14 @@ questionForm.addEventListener('submit', function(e){
             option_2: opField2.value,
             correct_answer: corr_answer,
             level: levelDrop.value,
-            difficulty: diffDrop.value})
+            difficulty: diffDrop.value,
+            creator: thisUser })
     }
 
     fetch("http://localhost:3000/questions", options)
     .then(resp => resp.json())
     .then(function(question){
-        updateUserQuestions(question);
+        displayUserQuestion(question);
         createdQuestionsArray.push(question);
         updateNumQuestions();
         countCreatedQuestions();
@@ -375,24 +378,24 @@ questionForm.addEventListener('submit', function(e){
 })
 
 //creates a record in user_questions table
-function updateUserQuestions(question){
-    const config = {
-        method: "POST",
-        headers: {
-            "content-type": "application/json",
-            "accept": "application/json"},
-        body: JSON.stringify({
-            user_id: thisUser,
-            question_id: question.id})
-    }
-    //make post request
-    fetch("http://localhost:3000/user_questions", config)
-    .then(resp => resp.json())
-    .then(uQ => displayUserQuestion(question, uQ.id))
-}
+// function updateUserQuestions(question){
+//     const config = {
+//         method: "POST",
+//         headers: {
+//             "content-type": "application/json",
+//             "accept": "application/json"},
+//         body: JSON.stringify({
+//             user_id: thisUser,
+//             question_id: question.id})
+//     }
+//     //make post request
+//     fetch("http://localhost:3000/user_questions", config)
+//     .then(resp => resp.json())
+//     .then(uQ => displayUserQuestion(question, uQ.id))
+// }
 
 //create an li for each question created by user. Display related words in createdQuestions div
-function displayUserQuestion(question, uQ){
+function displayUserQuestion(question){
     // if(typeof question != string){
     //     question = question.id
     // }
@@ -401,8 +404,8 @@ function displayUserQuestion(question, uQ){
     createdQuestions.prepend(span)
     span.innerHTML = 
     ` ${stringWord}<br>
-        <button style="font-size: 25px; border-radius: 30px;" id="edit-btn" data-uq-id="${uQ}" data-q-id="${question.id}">Edit</button>
-        <button style="background: red;border-radius: 30px;width: 40px;height: 40px;font-size: 30px;" id="del-btn" data-uq-id="${uQ}" data-q-id="${question.id}">X</button>
+        <button style="font-size: 25px; border-radius: 30px;" id="edit-btn" data-q-id="${question.id}">Edit</button>
+        <button style="background: red;border-radius: 30px;width: 40px;height: 40px;font-size: 30px;" id="del-btn" data-q-id="${question.id}">X</button>
         <br>`
 }
 
@@ -422,10 +425,10 @@ function resetForm(){
 document.addEventListener('click', function(e){
     const button = e.target
     if (button.matches('#edit-btn')) {
-        editQuestion(button.dataset.qId, button.dataset.uqId)
+        editQuestion(button.dataset.qId)
         button.parentElement.remove();
     } else if (button.matches('#del-btn')){
-        deleteQuestion(button.dataset.qId, button.dataset.uqId)
+        deleteQuestion(button.dataset.qId)
         button.parentElement.remove();
         resetForm();
     } else if (button.matches('#btn-edit')){
@@ -457,8 +460,8 @@ document.addEventListener('click', function(e){
         createdQuestions.prepend(span)
         span.innerHTML = 
         ` ${relatedWordsArr.join(', ')}<br>
-        <button style="font-size: 25px; border-radius: 30px;" id="edit-btn" data-uq-id="${document.querySelector('#btn-edit').dataset.record}" data-q-id="${document.querySelector('#btn-edit').dataset.update}">Edit</button>
-        <button style="background: red;border-radius: 30px;width: 40px;height: 40px;font-size: 30px;" id="del-btn" data-uq-id="${document.querySelector('#btn-edit').dataset.update}" data-q-id="${document.querySelector('#btn-edit').dataset.record}">X</button>`
+        <button style="font-size: 25px; border-radius: 30px;" id="edit-btn" data-q-id="${document.querySelector('#btn-edit').dataset.update}">Edit</button>
+        <button style="background: red;border-radius: 30px;width: 40px;height: 40px;font-size: 30px;" id="del-btn" data-q-id="${document.querySelector('#btn-edit').dataset.record}">X</button><br>`
 
 
         const options = {
@@ -477,6 +480,7 @@ document.addEventListener('click', function(e){
         fetch("http://localhost:3000/questions/" + updateId, options)
         .then(resp => resp.json())
         resetForm();
+        document.querySelector('.editCreateText').innerText = "Create Your Own Question"
         document.querySelector('#btn-edit').hidden = true
         document.querySelector('#submit-create').hidden = false
     }
@@ -484,11 +488,11 @@ document.addEventListener('click', function(e){
 })
 
 //fetches question by Id and populates form fields
-const editQuestion = (qId, uqId) => {
+const editQuestion = (qId) => {
+    document.querySelector('.editCreateText').innerText = "Edit Your Question"
     document.querySelector('#btn-edit').hidden = false
     document.querySelector('#submit-create').hidden = true
     document.querySelector('#btn-edit').dataset.update = qId
-    document.querySelector('#btn-edit').dataset.record = uqId
     //might work
     
         //end test above
@@ -520,18 +524,46 @@ const editQuestion = (qId, uqId) => {
 }
 
 //removes record from table and updates stats info
-const deleteQuestion = (qId, uqId) => {
+const deleteQuestion = (qId) => {
     const options = {
         method: "DELETE",
         headers: {
             "content-type": "application/json",
             "accept": "application/json"},
     }
-    fetch("http://localhost:3000/user_questions/" + uqId, options)
     fetch("http://localhost:3000/questions/" + qId, options)
     createdQuestionsArray.pop();
     updateNumQuestions();
 }
+
+
+function pullCreatedQuestions(){
+    fetch("http://localhost:3000/questions")
+    .then(resp => resp.json())
+    .then(findUserQuestions)
+}
+
+function findUserQuestions(questions){
+    for(let q of questions){
+        if(q.creator === thisUser){
+            populateCreatedQ(q)
+        }
+    }
+}
+
+function populateCreatedQ(createdQ){
+  
+       
+            const span = document.createElement('span')
+            createdQuestions.prepend(span)
+            span.innerHTML = 
+            ` ${createdQ.related_words.join(', ')}<br>
+            <button style="font-size: 25px; border-radius: 30px;" id="edit-btn" data-q-id="${createdQ.id}">Edit</button>
+            <button style="background: red;border-radius: 30px;width: 40px;height: 40px;font-size: 30px;" id="del-btn" data-q-id="${createdQ.id}">X</button><br>`
+      
+    
+}
+
 
 ///////////// BADGES //////////////////
 
@@ -714,3 +746,4 @@ toolbar.addEventListener('click', function(e){
     blur();
     setTimeout(function(){document.querySelector('#toolModal').classList.remove('animate__animated', 'animate__fadeInDownBig') ; }, 1000);
 })
+
