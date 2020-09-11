@@ -45,6 +45,9 @@ const mSTheme = ["#FFBE0B", "#FB5607", "#FF006E", "#8338EC", "#3A86FF"]
 const hSTheme = ["#1A535C", "#4ECDC4", "#F7FFF7", "#FF6B6B", "#FFE66D"]
 const satTheme = ["#e63946", "#a8dadc", "#457b9d", "#1d3557", "#f1faee"]
 let twoAwards = false
+const toolModal = document.getElementById("toolModal");
+const span = document.getElementsByClassName("close")[0];
+const toolbar = document.querySelector('.toolbar')
 // let thisUser = 0
 
 
@@ -657,3 +660,11 @@ function updateTheme(level){
     }
     setTheme(theme)
 }
+
+span.onclick = function() {
+    toolModal.style.display = "none";
+  }
+
+toolbar.addEventListener('click', function(e){
+    toolModal.style.display = "block";
+})
