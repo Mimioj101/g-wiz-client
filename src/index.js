@@ -48,7 +48,7 @@ let twoAwards = false
 const toolModal = document.getElementById("toolModal");
 const span = document.getElementsByClassName("close")[0];
 const toolbar = document.querySelector('.toolbar')
-// let thisUser = 0
+let thisUser = null
 
 
 //when card is clicked, a new question is pulled
@@ -146,23 +146,55 @@ loggedIn.hidden = true;
 
 //login verified 
 loginForm.addEventListener('submit', function(e){
+    console.log(e.target.firstElementChild.value)
     e.preventDefault();
     loggedIn.hidden = false;
     //login.style.backgroundColor = '#a8dadc';
     //login.children[0].remove();
     logo.hidden = true
     loginForm.hidden = true
-    const currentUser = e.target.firstElementChild.value
-    const options = {
-        method: 'POST',
-        headers: {'content-type': 'application/json', 'accept': 'application/json'},
-        body: JSON.stringify({name: currentUser})
-    }
-    fetch("http://localhost:3000/users/", options)
-    .then(resp => resp.json())
-    .then(myUser => storeUser(myUser))
-    start();
+    let username = e.target.firstElementChild.value
+    checkForUser(username)
+    // const options = {
+    //     method: 'POST',
+    //     headers: {'content-type': 'application/json', 'accept': 'application/json'},
+    //     body: JSON.stringify({name: currentUser})
+    // }
+    // fetch("http://localhost:3000/users/", options)
+    // .then(resp => resp.json())
+    // .then(myUser => storeUser(myUser))
+    // start();
 })
+
+function checkForUser(loggedUser){
+    fetch("http://localhost:3000/users/")
+    .then(resp => resp.json())
+    .then(users => { let found = null
+        for(let user of users){
+            if(user.name === loggedUser){
+                found = user
+            }
+        }
+        settingUpUser(found, loggedUser)
+    })
+}
+
+function settingUpUser(user, loggedUser){
+    if(user){
+        storeUser(user)
+        start();
+    } else {
+        const options = {
+            method: 'POST',
+            headers: {'content-type': 'application/json', 'accept': 'application/json'},
+            body: JSON.stringify({name: loggedUser})
+        }
+        fetch("http://localhost:3000/users/", options)
+        .then(resp => resp.json())
+        .then(myUser => storeUser(myUser))
+        start();
+    }
+}
 
 //store User's ID to body tag when they log in
 const storeUser = (myUser) => {
