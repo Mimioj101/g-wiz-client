@@ -44,6 +44,7 @@ const eSTheme = ["#FF595E", "#FFCA3A", "#8AC926", "#1982C4", "#6A4C93" ]
 const mSTheme = ["#FFBE0B", "#FB5607", "#FF006E", "#8338EC", "#3A86FF"]
 const hSTheme = ["#1A535C", "#4ECDC4", "#F7FFF7", "#FF6B6B", "#FFE66D"]
 const satTheme = ["#e63946", "#a8dadc", "#457b9d", "#1d3557", "#f1faee"]
+const uQTheme = ['#264653', '#2A9D8F', '#E9C46A', '#F4A261', '#E76F51']
 let twoAwards = false
 const toolModal = document.getElementById("toolModal");
 const span = document.getElementsByClassName("close")[0];
@@ -108,7 +109,17 @@ card_text.addEventListener('animationend', function(e) {
 function getAllQuestions(level, diff){
   fetch('http://localhost:3000/questions/')
   .then(resp => resp.json())
-  .then(questions => filterQuestions(questions, level, diff))
+  .then(questions => ignoreOtherUsersQs(questions, level, diff))
+}
+
+function ignoreOtherUsersQs(questions, level, diff){
+    const collectedQuestions = []
+    for(let question of questions){
+        if(question.creator === null || question.creator === thisUser){
+            collectedQuestions.push(question)
+        }
+    }
+    filterQuestions(collectedQuestions, level, diff)
 }
 
 //all the questions from database are passed into this function. Based on arg's passed in, filtered array
@@ -127,7 +138,7 @@ function getAllQuestions(level, diff){
 
   //display question on flashcard
   function displayQuestion(question){
-    text.innerHTML = `<ul style="margin-left: -125px">
+    text.innerHTML = `<ul style="margin-left: -125px; font-size: 2.4vw; margin-top: 100px">
     <li>${question.related_words[0].charAt(0).toUpperCase() + question.related_words[0].slice(1).toLowerCase()}</li>
     <li>${question.related_words[1].charAt(0).toUpperCase() + question.related_words[1].slice(1).toLowerCase()}</li>
     <li>${question.related_words[2].charAt(0).toUpperCase() + question.related_words[2].slice(1).toLowerCase()}</li>
@@ -220,7 +231,9 @@ function getLevels(){
         let levels = []
         let uniqValue = []
       for(let question of questions){
-        levels.push(question.level)
+          if(question.creator === null || question.creator === thisUser){
+            levels.push(question.level)
+          }
       }
       levels.forEach((l) => {
           if(!uniqValue.includes(l)){
@@ -301,8 +314,10 @@ function populateLevelBar(levels){
             name = 'Middle School'
         } else if (level == 'HS'){
             name = 'High School'
-        } else {
+        } else if (level == "SAT") {
             name = 'SAT'
+        } else if (level == "UQ"){
+            name = "User Questions"
         }
         option.innerText = name
         levelBar.append(option)
@@ -365,6 +380,7 @@ questionForm.addEventListener('submit', function(e){
     fetch("http://localhost:3000/questions", options)
     .then(resp => resp.json())
     .then(function(question){
+        getLevels();
         displayUserQuestion(question);
         createdQuestionsArray.push(question);
         updateNumQuestions();
@@ -403,7 +419,7 @@ function displayUserQuestion(question){
     const span = document.createElement('span')
     createdQuestions.prepend(span)
     span.innerHTML = 
-    ` ${stringWord}<br>
+    ` <style="font-size: 1.5vw>${stringWord}<br>
         <button style="font-size: 25px; border-radius: 30px;" id="edit-btn" data-q-id="${question.id}">Edit</button>
         <button style="background: red;border-radius: 30px;width: 40px;height: 40px;font-size: 30px;" id="del-btn" data-q-id="${question.id}">X</button>
         <br>`
@@ -458,8 +474,9 @@ document.addEventListener('click', function(e){
     
         const span = document.createElement('span')
         createdQuestions.prepend(span)
+        span.style = "font-size: 1.5vw;"
         span.innerHTML = 
-        ` ${relatedWordsArr.join(', ')}<br>
+        `${relatedWordsArr.join(', ')}<br>
         <button style="font-size: 25px; border-radius: 30px;" id="edit-btn" data-q-id="${document.querySelector('#btn-edit').dataset.update}">Edit</button>
         <button style="background: red;border-radius: 30px;width: 40px;height: 40px;font-size: 30px;" id="del-btn" data-q-id="${document.querySelector('#btn-edit').dataset.record}">X</button><br>`
 
@@ -555,9 +572,10 @@ function populateCreatedQ(createdQ){
   
        
             const span = document.createElement('span')
+            span.style = "font-size: 1.5vw;"
             createdQuestions.prepend(span)
             span.innerHTML = 
-            ` ${createdQ.related_words.join(', ')}<br>
+            `${createdQ.related_words.join(', ')}<br>
             <button style="font-size: 25px; border-radius: 30px;" id="edit-btn" data-q-id="${createdQ.id}">Edit</button>
             <button style="background: red;border-radius: 30px;width: 40px;height: 40px;font-size: 30px;" id="del-btn" data-q-id="${createdQ.id}">X</button><br>`
       
@@ -727,8 +745,11 @@ function updateTheme(level){
         case "HS":
             theme = hSTheme
             break;
-        default:
+        case "SAT":
             theme = satTheme
+            break;
+        default:
+            theme = uQTheme
     }
     setTheme(theme)
 }
