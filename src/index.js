@@ -50,6 +50,8 @@ const toolModal = document.getElementById("toolModal");
 const span = document.getElementsByClassName("close")[0];
 const toolbar = document.querySelector('.toolbar')
 let thisUser = null
+let username = null
+const logout = document.querySelector('#toolbar-logo')
 
 
 //when card is clicked, a new question is pulled
@@ -165,7 +167,7 @@ loginForm.addEventListener('submit', function(e){
     //login.children[0].remove();
     logo.hidden = true
     loginForm.hidden = true
-    let username = e.target.firstElementChild.value
+    username = e.target.firstElementChild.value
     checkForUser(username)
     // const options = {
     //     method: 'POST',
@@ -220,6 +222,9 @@ function start(){
     card_text.classList.add('animate__animated', 'animate__bounceInLeft');
     getDifficulty('ES');
     getLevels(); 
+    let personName = document.querySelector('#toolbar-gwiz span').innerText = username;
+        
+    
     setTimeout(function(){ pullCreatedQuestions(); }, 1000);  
 }
 
@@ -766,5 +771,9 @@ toolbar.addEventListener('click', function(e){
     document.querySelector('#toolModal').classList.add('animate__animated', 'animate__fadeInDownBig')
     blur();
     setTimeout(function(){document.querySelector('#toolModal').classList.remove('animate__animated', 'animate__fadeInDownBig') ; }, 1000);
+})
+
+logout.addEventListener('click', function(e){
+    location.reload();
 })
 
